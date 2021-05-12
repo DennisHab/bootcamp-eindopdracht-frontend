@@ -1,0 +1,55 @@
+.header {
+    display: flex;
+    position: relative;
+    background-color: #E6E6E6;
+    color: #8B0D32;
+    align-items: center;
+    justify-content: center;
+}
+.login-register {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}
+.login-register li {
+    margin: 0 0 20px 20px;
+}
+a {
+    text-decoration: none;
+    color: #8B0D32;
+}
+a :visited {
+    text-decoration: none;
+    color: #8B0D32;
+}
+a:hover, a:active {
+    background-color: #8B0D32;
+    color: #E6E6E6;
+    border-radius: 4px;
+    padding: 2px;
+}
+ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding-inline-start: 0px;
+}
+.middle-list{
+    margin: 0 100px 0;
+}
+
+.top-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(230, 230, 230, 0.7);
+    border-radius: 0px 0px 30px 30px;
+}
+.top-menu li {
+    display: inline;
+    font-weight: bold;
+    font-size: xx-large;
+}
