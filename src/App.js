@@ -13,7 +13,6 @@ import Reviews from "./pages/Reviews";
 
 function App() {
   return (
-      <BrowserRouter>
         <Router>
           <TopMenu/>
           <Switch>
@@ -40,7 +39,7 @@ function App() {
             </Route>
           </Switch>
         </Router>
-      </BrowserRouter>
+
   )
 }
 export default App;

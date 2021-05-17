@@ -1,43 +1,47 @@
 import React from 'react';
 import {Link, NavLink} from "react-router-dom";
 import BigLogo from "../assets/logo_transparent_background.png";
-import './TopMenu.css';
+import styles from './TopMenu.module.css';
 
 function TopMenu() {
     return (
         <>
-        <div className="header-top-menu">
-            <header className="header">
+        <div className={styles["header-top-menu"]}>
+            <header className={styles.header}>
+                <NavLink to="/">
                 <img src={BigLogo} width="500px" height="160px" alt="logo"/>
+                </NavLink>
             </header>
-                <ul className="login-register">
+                <nav className={styles["login-register"]}>
+                <ul>
                     <li>
-                        <NavLink to="/login" className="login "activeClassName="login-active">
+                        <NavLink to="/login" className={styles.login} activeClassName={styles["login-active"]}>
                             Login
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/register" className="register" activeClassName="register-active">
+                        <NavLink to="/register" className={styles.register} activeClassName={styles["register-active"]}>
                             Register
                         </NavLink>
                     </li>
                 </ul>
+                </nav>
         </div>
 
-            <nav className="top-menu">
+            <nav className={styles["top-menu"]}>
                 <ul>
                     <li>
-                        <NavLink to="/events" activeClassName="events-active">
+                        <NavLink to="/events" activeClassName={styles["events-active"]}>
                             Events
                         </NavLink>
                     </li>
-                    <li className="middle-list">
-                        <NavLink to="/venues" activeClassName="venues-active">
+                    <li className={styles["middle-list"]}>
+                        <NavLink to="/venues" activeClassName={styles["venues-active"]}>
                             Venues
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/reviews" activeClassName="reviews-active">
+                        <NavLink to="/reviews" activeClassName={styles["reviews-active"]}>
                             Reviews
                         </NavLink>
                     </li>

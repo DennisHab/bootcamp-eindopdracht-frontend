@@ -24,7 +24,13 @@ a :visited {
     text-decoration: none;
     color: #8B0D32;
 }
-a:hover, a:active {
+.login-register a:hover, a:active, .top-menu a:hover, a:active  {
+    background-color: #8B0D32;
+    color: #E6E6E6;
+    border-radius: 4px;
+    padding: 2px;
+}
+.events-active, .venues-active, .reviews-active, .login-active, .register-active {
     background-color: #8B0D32;
     color: #E6E6E6;
     border-radius: 4px;
@@ -46,7 +52,7 @@ ul {
     align-items: center;
     justify-content: center;
     background-color: rgba(230, 230, 230, 0.7);
-    border-radius: 0px 0px 30px 30px;
+    border-radius: 0 0 30px 30px;
 }
 .top-menu li {
     display: inline;
