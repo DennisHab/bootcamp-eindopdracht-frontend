@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link, NavLink} from "react-router-dom";
 import BigLogo from "../assets/logo_transparent_background.png";
 import styles from './TopMenu.module.css';
+import {AuthContext} from "../context/AuthContext";
 
 function TopMenu() {
+    const { user, logout} = useContext(AuthContext);
     return (
         <>
         <div className={styles["header-top-menu"]}>
@@ -12,6 +14,7 @@ function TopMenu() {
                 <img src={BigLogo} width="500px" height="160px" alt="logo"/>
                 </NavLink>
             </header>
+            {!user &&
                 <nav className={styles["login-register"]}>
                 <ul>
                     <li>
@@ -25,7 +28,19 @@ function TopMenu() {
                         </NavLink>
                     </li>
                 </ul>
-                </nav>
+                </nav>}
+            {user && <nav className={styles["login-register"]}>
+                <ul>
+                    <li>
+                        <NavLink to="/profile" className={styles.profile} activeClassName={styles["profile-active"]}>
+                         Profile of {user.username}
+                        </NavLink>
+                    </li>
+                    <li>
+                        <button onClick={logout}> Logout</button>
+                    </li>
+                </ul>
+            </nav>}
         </div>
 
             <nav className={styles["top-menu"]}>

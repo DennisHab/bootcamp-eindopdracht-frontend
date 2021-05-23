@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    border: none;
+}
+
+.review-content {
+    border: none;
+}
+
+.review-content-textbox {
+    width: 80%;
+    height: 100px;
+}

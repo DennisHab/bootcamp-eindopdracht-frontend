@@ -1,7 +1,7 @@
 
 import './App.css';
 import React, {useState} from 'react';
-import {BrowserRouter as Router, Switch, Route, BrowserRouter} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import TopMenu from "./components/TopMenu";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -10,14 +10,22 @@ import Profile from "./pages/Profile";
 import Events from "./pages/Events";
 import Venues from "./pages/Venues";
 import Reviews from "./pages/Reviews";
+import SingleVenue from "./pages/SingleVenue";
+import SingleEvent from "./pages/SingleEvent";
 
 function App() {
   return (
-        <Router>
+        <>
           <TopMenu/>
           <Switch>
             <Route exact path="/">
               <Home/>
+            </Route>
+            <Route exact path="/venues/:id">
+              <SingleVenue/>
+            </Route>
+            <Route exact path="/events/:id">
+              <SingleEvent/>
             </Route>
             <Route exact path="/login">
               <Login/>
@@ -38,7 +46,7 @@ function App() {
               <Reviews/>
             </Route>
           </Switch>
-        </Router>
+        </>
 
   )
 }

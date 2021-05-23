@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-content: center;
+}
+
+.profile {
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: rgba(230, 230, 230, 0.9);
+    border: #8B0D32 2px solid;
+    border-radius: 10px;
+    color: #8B0D32;
+    width: 40%;
+    height: auto;
+    margin: 20px;
+    padding: 30px;
+}
+.profile span {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin: 10px;
+    font-size: 20px;
+}
+
+.profile p {
+    margin: 0;
+    margin-right: 5px;
+    font-weight: bold;
+}
+.venue img {
+    border: 2px #E6E6E6 solid;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    box-shadow: #E6E6E6 0px 7px 29px 0px;
+}
+.venue h2 {
+    padding: 0 0 5px 0;
+}
+.venue {
+    width: 70%;
+    padding: 0 0 40px 0;
+    background-color: rgba(139, 13, 50, 1);
+    border: #E6E6E6 4px solid;
+    color: #E6E6E6;
+    border-radius: 10px;
+}
+.profile button {
+    height:fit-content;
+}

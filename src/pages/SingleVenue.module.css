@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container img {
+    position: absolute;
+    left: 200px;
+    top: 300px;
+    width: 200px;
+    height: 150px;
+    border: #E6E6E6 4px solid;
+    margin-right: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border-radius: 10px;
+}
+.venue-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba(230, 230, 230, 0.9);
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border-radius: 10px;
+    border: none;
+    color: #8B0D32;
+    width: 40%;
+    padding-top: 20px;
+    margin: 20px;
+}
+.venue-reviews {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba(230, 230, 230, 0.9);
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border-radius: 10px;
+    border: none;
+    color: #8B0D32;
+    width: 40%;
+    padding:20px;
+    margin: 20px;
+}
+.scrollable-reviews {
+    overflow: scroll;
+    height: 300px;
+    border: #8B0D32 1px solid;
+    padding: 10px;
+    border-radius: 10px;
+}
+.venue-card h1 {
+    border-bottom: #8B0D32 4px solid;
+    padding-bottom: 20px;
+}
+.venue-card ,.venue-reviews p {
+    font-weight: bold;
+}
+.single-review {
+    border: #8B0D32 2px solid;
+    margin:10px;
+    border-radius: 10px;
+    text-align: start;
+    padding: 10px;
+}
+
+.venuecard-image {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

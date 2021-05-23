@@ -1,0 +1,10 @@
+form button {
+    margin: 20px;
+    background-color: #8B0D32;
+    border: none;
+    border-radius: 5px;
+    height:fit-content;
+    font-size: 25px;
+    color: #E6E6E6;
+    width:fit-content;
+}

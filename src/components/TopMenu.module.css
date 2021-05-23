@@ -8,6 +8,8 @@
 }
 .login-register {
     display: flex;
+    font-size: large;
+    font-weight: bold;
     flex-direction: row;
     position: absolute;
     top: 10px;
@@ -29,8 +31,9 @@ a :visited {
     color: #E6E6E6;
     border-radius: 4px;
     padding: 2px;
+    box-shadow: #8B0D32 0px 7px 29px 0px;
 }
-.events-active, .venues-active, .reviews-active, .login-active, .register-active {
+.events-active, .venues-active, .reviews-active, .login-active, .register-active, .profile-active {
     background-color: #8B0D32;
     color: #E6E6E6;
     border-radius: 4px;
@@ -58,4 +61,19 @@ ul {
     display: inline;
     font-weight: bold;
     font-size: xx-large;
+}
+button {
+    background-color: #8B0D32;
+    text-align: center;
+    color: #E6E6E6;
+    border: none;
+    height: 20px;
+    width: 80px;
+}
+
+button:hover {
+    background-color: #E6E6E6;
+    text-align: center;
+    color: #8B0D32;
+    border: 2px solid #8B0D32;
 }

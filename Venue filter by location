@@ -1,0 +1,93 @@
+ function handleClick() {
+        if(dropdown === "none"){toggleDropdown("flex")}
+        if(dropdown === "flex"){toggleDropdown("none")}
+    }
+    const sortedData = venueData.sort(function(a,b){
+        if(a.address.city < b.address.city){return -1}
+        if(a.address.city > b.address.city){return 1}
+        return 0;
+    })
+    const distinctVenueLocations = [...new Set(sortedData.map(x=> x.address.city))];
+    const distinctVenueLocationsFilter =  [...new Set(filterCheckbox.map(x=> x))];
+    console.log(distinctVenueLocationsFilter);
+
+    const filteredData = venueData.filter((venue) => {
+       return distinctVenueLocationsFilter.includes(venue.address.city);
+    })
+    <button className={styles["button-filter"]} onClick={()=>handleClick()}> Filter</button>
+                <fieldset style={{display: dropdown}} className={styles["dropdown-filter"]}>
+                    <ul>
+                    {distinctVenueLocations.map((location, key) => {
+                        return ( <li key={key} ><label htmlFor={location}>
+                                {location}
+                                    <Checkbox
+                                        filterCheckbox = {filterCheckbox}
+                                        setFilterCheckbox = {setFilterCheckbox}
+                                        checkbox = {location}
+                                        value = {location}
+                                        id = {location}
+                                    />
+                                </label></li>)
+                        })
+                    }
+                    </ul>
+                </fieldset>
+
+ import React, {useState} from 'react';
+
+ function Checkbox({filterCheckbox, setFilterCheckbox, value, checkbox, id, key}){
+
+         const [isChecked, setIsChecked] = useState(false);
+
+         const handleChange = e => {
+             setIsChecked(!isChecked)
+             {e.target.checked && !filterCheckbox.includes({value}) && setFilterCheckbox({value})}
+             {!e.target.checked && filterCheckbox.filter((location)=>{
+                 return location.value !== {value}
+             })}
+             console.log(filterCheckbox)
+
+     }
+         return(
+             <input key={key} type="checkbox" name={checkbox} onChange={(e)=>handleChange(e)} checked={isChecked} value={value} id={id}/>
+         )
+ }
+
+ export default Checkbox;
+
+ .dropdown-filter input {
+     width: 30px;
+     margin: 4px 0px 0 0px ;
+ }
+ .dropdown-filter label {
+     display: flex;
+     flex-direction: row;
+ }
+ .dropdown-filter li {
+     padding: 10px;
+ }
+ .button-filter {
+     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+     border-radius: 10px;
+     border: #E6E6E6 3px solid;
+     margin-top: 50px;
+     margin-bottom: -50px;
+     width:150px;
+     height:50px;
+     position: relative;
+ }
+ .button-filter:hover + .dropdown-filter{
+     display: flex;
+ }
+ .dropdown-filter {
+     display: flex;
+     width: 400px;
+     font-size: 10px;
+     flex-flow: wrap row;
+     justify-content: center;
+     align-items: center;
+     position: absolute;
+     top:335px;
+     background-color: rgba(230, 230, 230, 0.9);
+     border-radius: 10px;
+ }

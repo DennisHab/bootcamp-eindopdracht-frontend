@@ -1,29 +1,27 @@
-import React ,{useState} from 'react';
+import React ,{useState, useContext} from 'react';
 import {useHistory} from "react-router-dom";
-import {useForm} from "react-hook-form";
+import {set, useForm} from "react-hook-form";
 import axios from "axios";
-import styles from "./Login.module.css"
+import styles from "./Login.module.css";
+import {AuthContext} from "../context/AuthContext";
 
 function Login() {
+    const { login } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [backendError, setBackEndError] = useState([]);
     const history = useHistory();
     const [succes, toggleSucces] = useState(false);
 
     async function onSubmit(data) {
-        console.log(data)
         try{
             const postData = await axios.post("http://localhost:8080/authenticate", {
                 username: data.username,
                 password: data.password
-            }, {
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                }, body: JSON.stringify(data)})
-            console.log(postData)
-            history.push("/");
-            toggleSucces(true);
+            })
+            login(postData.data.jwt);
         }
         catch(e) {
+            setBackEndError([e.response.data.message]);
             console.error(e);
         }
     }
@@ -53,6 +51,7 @@ function Login() {
                         {...register("password", {required: "This field is required"})}
                     />
                 </label>
+                {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
                 <button
                     type="submit"
                 >
@@ -61,9 +60,7 @@ function Login() {
             </fieldset>
 
     </form>
-
     )
-
 }
 
 export default Login;
