@@ -8,8 +8,11 @@
 .review-content {
     border: none;
 }
-
 .review-content-textbox {
     width: 80%;
     height: 100px;
+}
+.slider-container{
+    display: flex;
+    flex-direction: row;
 }

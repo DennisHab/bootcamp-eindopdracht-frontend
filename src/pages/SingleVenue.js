@@ -1,14 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from "axios";
 import styles from "./SingleVenue.module.css";
 import NoImage from "../assets/no-image-found-360x250.png";
+import {AuthContext} from "../context/AuthContext";
 import AddReview from "../components/AddReview";
+import EventForm from "../components/EventForm";
 
 
 function SingleVenue() {
     const [venueData, setVenueData] = useState(null);
+    const [addEvent, toggleAddEvent] = useState(false);
+    const {user} = useContext(AuthContext)
     let {id} = useParams();
+
+
+
+
 
 
     useEffect(()=> {

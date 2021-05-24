@@ -3,8 +3,58 @@
     flex-flow: wrap column;
     justify-content: center;
     align-content: center;
+    align-items: center;
+}
+.container input {
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+    border: none;
+    border-bottom: #8B0D32 4px solid;
+    background: none;
+    margin-bottom:30px;
+    text-align: center;
 }
 
+.navigation-bar {
+    margin-top: 30px;
+    width:70%;
+    padding: 5px 5px 0;
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+.navigation-bar button {
+    width: 30%;
+    height: 80px;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: rgba(230, 230, 230, 0.7);
+    color: #8B0D32;
+    border-radius: 25px 25px 0 0 ;
+    border: 2px #8B0D32 solid;
+    border-bottom: none;
+    padding: 5px;
+}
+.navigation-bar button:hover {
+    background-color: #8B0D32;
+    color: #E6E6E6;
+    width: 35%;
+    border: #E6E6E6 2px solid;
+    border-bottom: none;
+}
+.navigation-bar button:focus {
+    background-color: #8B0D32;
+    color: #E6E6E6;
+    width: 35%;
+    border: #E6E6E6 2px solid;
+    border-bottom: none;
+}
+.profile-header {
+    background-color: #8B0D32;
+    width: 100%;
+    color: #E6E6E6;
+    border-radius: 10px 10px 0 0 ;
+}
 .profile {
     display: flex;
     flex-flow: wrap column;
@@ -13,13 +63,12 @@
     text-align: center;
     align-items: center;
     background-color: rgba(230, 230, 230, 0.9);
-    border: #8B0D32 2px solid;
+    border:none;
+    padding: 0 0 50px;
     border-radius: 10px;
     color: #8B0D32;
-    width: 40%;
-    height: auto;
-    margin: 20px;
-    padding: 30px;
+    width: 70%;
+    height: fit-content;
 }
 .profile span {
     display: flex;
@@ -30,11 +79,51 @@
     margin: 10px;
     font-size: 20px;
 }
-
 .profile p {
     margin: 0;
     margin-right: 5px;
     font-weight: bold;
+}
+.profile-table {
+    margin-top: 40px;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+}
+.profile-table table {
+    width: 80%;
+}
+.profile-table td{
+    width: 200px;
+    text-align: start;
+    padding: 10px;
+}
+.profile-options{
+    width: 100%;
+
+}
+.address-form {
+    width: 70%;
+    font-size: 25px;
+}
+.password-change {
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: rgba(230, 230, 230, 0.9);
+    border:none;
+    padding: 50px 0 50px;
+    border-radius: 10px;
+    color: #8B0D32;
+    width: 70%;
+    height: fit-content;
+}
+.password-change label{
+    font-size: 25px;
 }
 .venue img {
     border: 2px #E6E6E6 solid;
@@ -47,12 +136,11 @@
     padding: 0 0 5px 0;
 }
 .venue {
-    width: 70%;
+    width: 80%;
+    color: #8B0D32;
     padding: 0 0 40px 0;
-    background-color: rgba(139, 13, 50, 1);
-    border: #E6E6E6 4px solid;
-    color: #E6E6E6;
     border-radius: 10px;
+    border: none;
 }
 .profile button {
     height:fit-content;

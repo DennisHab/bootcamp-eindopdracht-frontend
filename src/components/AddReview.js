@@ -11,12 +11,12 @@ function  AddReview({type, id}) {
     const {user} = useContext(AuthContext);
 
     function slideRight(){
-        if(sliderRating <= 10){
+        if(sliderRating < 10){
             setSliderRating(sliderRating + 1)
         }
     }
     function slideLeft(){
-        if(sliderRating >= 0){
+        if(sliderRating > 1){
             setSliderRating(sliderRating - 1)
         }
     }
@@ -51,18 +51,8 @@ function  AddReview({type, id}) {
                     <div className={styles["slider-container"]}>
                     <label htmlFor="review-rating">
                         Rate this {type}
+                        <button onClick={slideLeft}>{"<"}</button>
                         <p>{sliderRating}</p>
-                        <button onClick={slideLeft}>{">"}</button>
-                        <input
-                            name="rating"
-                            type="range"
-                            min="1" max="10"
-                            defaultValue="5"
-                            className="slider"
-                            onChange={(e)=>setSliderRating(e.target.value)}
-                            id="myRange"
-                            {...register("rating")}
-                        />
                         <button onClick={slideRight}>{">"}</button>
                     </label>
                     </div>
