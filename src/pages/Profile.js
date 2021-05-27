@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {AuthContext} from "../context/AuthContext";
 import {useHistory} from "react-router-dom"
 import styles from "./Profile.module.css";
@@ -8,20 +8,35 @@ import AddressForm from "../components/AddressForm";
 import VenueForm from "../components/VenueForm";
 import EventForm from "../components/EventForm";
 import PasswordChange from "../components/PasswordChange";
+import VenueCard from "../components/VenueCard";
+import EventCard from "../components/EventCard";
 
 function Profile() {
     const history = useHistory();
     const {user, logout} = useContext(AuthContext);
     const [addressAdd, setAddressAdd] = useState(false);
     const [addressChange, setAddressChange] = useState(false);
-
     const [venueAdd, setVenueAdd] = useState(false);
     const [backendError, setBackenderror] = useState([]);
     const {register, handleSubmit, formState: {errors}} = useForm();
-    const [addEvent, toggleAddEvent] = useState(false);
     const [currentTab, setCurrentTab] = useState("profile");
     const [passwordChange, togglePasswordChange] = useState(false);
+    const [userEvents, setUserEvents] = useState([]);
+    const [venueId, setVenueId] = useState(0);
 
+    //AddUserEvents wordt aangeroepen om alle events van de ingelogde user op te halen.
+    function addUserEvents() {
+        if (user.authorities[0].authority === "ROLE_USERSOWNER") {
+            const userVenueList = user.venueList
+            for (let i = 0; i < userVenueList.length; i++) {
+                setUserEvents(userVenueList[i].events)
+            }
+        }
+    }
+    useEffect(() => {
+            addUserEvents()
+        }
+        , [])
 
     async function onSubmit(data) {
         try {
@@ -50,10 +65,10 @@ function Profile() {
         }
     }
 
-
     return (
         <div className={styles.container}>
             <div className={styles["navigation-bar"]}>
+                {/*De navigatiebalk bepaald op basis van het type gebruiker wat er getoond wordt in de profielpagina*/}
                 <button value="profile" onClick={(e) => setCurrentTab(e.target.value)}> My Profile</button>
                 <button value="password" onClick={(e) => setCurrentTab(e.target.value)}>Change password</button>
                 {user.authorities[0].authority === "ROLE_USERSOWNER" && <>
@@ -74,40 +89,52 @@ function Profile() {
                 <div className={styles["profile-table"]}>
                     <table>
                         <tr>
-                            <td>First name: </td>
+                            <th>First name:</th>
                             <td>{user.firstName}</td>
                         </tr>
                         <tr>
-                            <td>Second name:</td>
+                            <th>Second name:</th>
                             <td>{user.lastName}</td>
-
                         </tr>
                         <tr>
-                            <td>E-mail:</td>
+                            <th>E-mail:</th>
                             <td>{user.emailAddress}</td>
                         </tr>
+                        {user.address !== null && <>
+                            <tr>
+                                <th>Streetname:</th>
+                                <td>{user.address.streetName} {user.address.houseNumber}</td>
+                            </tr>
+                            <tr>
+                                <th>Postal code:</th>
+                                <td>{user.address.postalCode}</td>
+                            </tr>
+                            <tr>
+                                <th>City:</th>
+                                <td>{user.address.city}</td>
+                            </tr>
+                        </>}
                     </table>
                 </div>
                 <div className={styles["profile-options"]}>
                     {!addressAdd ?
-                    <button onClick={()=>setAddressAdd(true)}>
-                        Add address to profile
-                    </button> :
-                    <button onClick={()=>setAddressAdd(false)}>
-                        Add later
-                    </button>
-
+                        <button onClick={() => setAddressAdd(true)}>
+                            Add address to profile
+                        </button> :
+                        <button onClick={() => setAddressAdd(false)}>
+                            Add later
+                        </button>
                     }
-                    <button onClick={()=>setAddressAdd(true)}>
-                        Add address to profile
-                    </button>
-
-                    <button onClick={()=>setAddressChange(true)}>
-                        Change address
-                    </button>
-
+                    {!addressChange ?
+                        <button onClick={() => setAddressChange(true)}>
+                            Change address
+                        </button> :
+                        <button onClick={() => setAddressChange(false)}>
+                            Change later
+                        </button>
+                    }
                 </div>
-                {addressChange | addressAdd &&
+                {addressChange &&
                 <div className={styles["address-form"]}>
                     <AddressForm
                         onSubmit={onSubmit}
@@ -115,15 +142,105 @@ function Profile() {
                     />
                 </div>
                 }
-
+                {addressAdd &&
+                <div className={styles["address-form"]}>
+                    <AddressForm
+                        onSubmit={onSubmit}
+                        backendError={backendError}
+                    />
+                </div>
+                }
             </fieldset>}
             {currentTab === "password" &&
-            <div className={styles["password-change"]}>
+            <fieldset className={styles["password-change"]}>
                 <PasswordChange/>
-            </div>
+            </fieldset>
             }
-        </div>)
+            {currentTab === "venues" &&
+            <fieldset className={styles.venues}>
+                <header className={styles["venues-header"]}>
+                    <h1>Venues of {user.username}</h1>
+                </header>
+                <div className={styles["venue-navigation"]}>
+                    {!venueAdd ? <button onClick={() => setVenueAdd(true) }> Add venue</button>
+                        : <button onClick={() => setVenueAdd(false)}> Add later</button>
+                    }
+
+                </div>
+                {venueAdd &&
+                <VenueForm
+                    username={user.username}
+                />
+                }
+                {!venueAdd && user.venueList.length > 0 && <div className={styles["venue-list"]}>
+                    {user.venueList.map((venue) => {
+                        return (<>
+                            <VenueCard
+                                    image={venue.image}
+                                    name={venue.venueName}
+                                    city={venue.address.city}
+                                    events={venue.events}
+                                    id={venue.id}
+                                    facebook={venue.facebook}
+                                    instagram={venue.instagram}
+                                    rating={venue.rating}
+                                    website={venue.website}
+                                />
+                            </>
+                        )
+                    })}
+
+                </div>}
+                {!user.venueList && <p>No venues yet, click 'add venue' to add one!</p>}
+            </fieldset>
+            }
+            {currentTab === "events" &&
+            <section className={styles.events}>
+                {userEvents.map((userEvent) => {
+                    return (
+                        <div className={styles["event-cards"]}>
+                            <EventCard
+                                image={userEvent.image}
+                                name={userEvent.name}
+                                venue={userEvent.venue.venueName}
+                                venueId={userEvent.venue.id}
+                                id={userEvent.id}
+                                date={userEvent.date}
+                                time={userEvent.time}
+                                description={userEvent.eventDescription}
+                                type={userEvent.type}
+                                rating={userEvent.rating}
+                                ticketRequired={userEvent.ticketRequired}
+                            />
+                        </div>)
+                })}
+            </section>
+            }
+            {currentTab === "favEvents" &&
+            <section className={styles.events}>
+                {user.favouredEvents.length > 0 ? user.favouredEvents.map((userEvent) => {
+                    return (
+                        <div className={styles["event-cards"]}>
+                            <EventCard
+                                image={userEvent.image}
+                                name={userEvent.name}
+                                venue={userEvent.venue.venueName}
+                                id={userEvent.id}
+                                date={userEvent.date}
+                                time={userEvent.time}
+                                description={userEvent.eventDescription}
+                                type={userEvent.type}
+                                rating={userEvent.rating}
+                                ticketRequired={userEvent.ticketRequired}
+                            />
+                        </div>)
+                }) : <h1>No favourite events yet</h1>}
+            </section>
+            }
+        </div>
+    )
 }
+
 export default Profile;
 
 

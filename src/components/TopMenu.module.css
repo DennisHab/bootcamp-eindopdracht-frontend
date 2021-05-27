@@ -54,6 +54,7 @@ ul {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     background-color: rgba(230, 230, 230, 0.7);
     border-radius: 0 0 30px 30px;
 }
@@ -70,10 +71,18 @@ button {
     height: 20px;
     width: 80px;
 }
-
 button:hover {
     background-color: #E6E6E6;
     text-align: center;
     color: #8B0D32;
     border: 2px solid #8B0D32;
+}
+@media(max-width: 600px) {
+    .homepage-links {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: space-evenly;
+        margin-top: 100px;
+    }
 }

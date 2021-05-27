@@ -9,7 +9,9 @@ return (
             <div className={styles.flipper}>
                 <div className={styles.front}>
                     <img src={image} width = "400px" height="400px" alt="Image"/>
-                    <p>{text}</p>
+                    <section className={styles["text-area-front"]}>
+                        <p>{text}</p>
+                    </section>
                 </div>
                 <div className={styles.back}>
                     <p>{text}</p>

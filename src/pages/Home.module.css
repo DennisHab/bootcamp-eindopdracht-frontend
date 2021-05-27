@@ -1,0 +1,19 @@
+.homepage-links {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-evenly;
+    margin-top: 100px;
+}
+@media only screen and (max-width: 600px) {
+    .homepage-links {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: space-evenly;
+        margin-top: 100px;
+    }
+}
+
+
+

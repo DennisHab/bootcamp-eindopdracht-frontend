@@ -9,7 +9,6 @@
 }
 .container fieldset{
     border: none;
-    background-color: #E6E6E6;
     color: #8B0D32;
 }
 .container input{
@@ -43,7 +42,7 @@ select:hover{
     width: 90%;
     height: 100px;
 }
-.ticket-required{
+#ticket-required{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -53,15 +52,15 @@ select:hover{
     margin: 10px;
 }
 .ticket-required label{
-    font-size: 20px;
     display: inline-flex;
+    flex-direction: row;
+    font-size: 20px;
 }
 .ticket-required input{
-    width: 10px;
-    margin:0;
-    padding:10px;
-    display: inline-flex;
+    display: inline;
 }
+
+
 
 
 

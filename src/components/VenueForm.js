@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
-import styles from "../pages/Register.module.css";
+import styles from "./VenueForm.module.css";
 import axios from "axios";
 
 function VenueForm({username}) {
@@ -15,6 +15,9 @@ function VenueForm({username}) {
             venueName: data.venueName,
             capacity: data.capacity,
             image: image || data.image,
+            facebook: data.facebook,
+            instagram: data.instagram,
+            website: data.website
 
         })
         const getVenueId = await axios.get(`http://localhost:8080/usersOwner/${username}/venues/id`)
@@ -47,8 +50,8 @@ function VenueForm({username}) {
                 .catch(err => console.log(err));
         }}
     return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-         <fieldset>
+    <form onSubmit={handleSubmit(onSubmit)} >
+         <fieldset className={styles["venue-form"]}>
             <p>Please fill in venue information here</p>
             <label htmlFor="venue-name">
                 Venue name:
@@ -126,6 +129,38 @@ function VenueForm({username}) {
                     maxLength:{value: 40}, message: "Country must be up to 40 characters long"})}
                 />
             </label>
+            <h1>Social media:</h1>
+            <label htmlFor="facebook-page">
+                 Facebook:
+                 <div className={styles.error}>{errors?.facebook?.message} </div>
+                 <input
+                     name="facebook"
+                     id="facebook-page"
+                     type="text"
+                     {...register("facebook", {maxLength: 100, message:"Length can't exceed 100 characters"})}
+                 />
+            </label>
+            <label htmlFor="instagram-page">
+                 Instagram:
+                 <div className={styles.error}>{errors?.instagram?.message} </div>
+                 <input
+                     name="instagram"
+                     id="instagram-page"
+                     type="text"
+                     {...register("instagram", {maxLength: 100, message:"Length can't exceed 100 characters"})}
+                 />
+            </label>
+            <label htmlFor="website">
+                 Website:
+                 <div className={styles.error}>{errors?.website?.message} </div>
+                 <input
+                     name="website"
+                     id="website"
+                     type="text"
+                     {...register("website", {maxLength: 100, message:"Length can't exceed 100 characters"})}
+                 />
+            </label>
+                <h1>Images:</h1>
             <label htmlFor="file">
                 Upload picture (maximum size= 5MB):
             <div className={styles.error}>{errors?.file?.message} </div>

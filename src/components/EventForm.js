@@ -1,9 +1,6 @@
 import React, {useState, useContext} from "react";
 import {useForm} from "react-hook-form";
-import {registerLocale} from "react-datepicker";
-import nl from "date-fns/locale/nl";
 import styles from "./EventForm.module.css";
-
 import axios from "axios";
 
 function EventForm({venueId}) {
@@ -11,8 +8,7 @@ function EventForm({venueId}) {
     const [imageDisabled, toggleImageDisabled] = useState(false);
     const [fileDisabled, toggleFileDisabled] = useState(false);
     const [image, setImage] = useState("");
-    const [backendError, setBackendError] = useState([])
-    registerLocale('nl', nl);
+    const [backendError, setBackendError] = useState([]);
 
     function uploadImage(e) {
         const files = e.target.files[0];
@@ -29,9 +25,13 @@ function EventForm({venueId}) {
                 .catch(err => console.log(err));
         }}
 
+
     async function onSubmit(data){
+
+
         console.log(data)
         try{
+
             const postEvent = await axios.post(`http://localhost:8080/venues/${venueId}/events`, {
                 name: data.name,
                 type: data.type,
@@ -46,6 +46,7 @@ function EventForm({venueId}) {
         }
         catch (e){
             console.error(e)
+
         }
     }
     return(
@@ -101,17 +102,18 @@ function EventForm({venueId}) {
                     </label>
                     <label htmlFor="event-description">
                         Event description:
-                        <div className={styles.error}>{errors?.time?.message} </div>
+                        <div className={styles.error}>{errors?.eventDescription?.message} </div>
                         <textarea
                             id="event-description"
                             name="eventDescription"
                             placeholder="Give a short description of your event"
-                            {...register("EventDescription", {required: "This field is required"})}
+                            {...register("eventDescription", {required: "This field is required"})}
                         />
                     </label>
                         <p>Ticket required?</p>
-                    <div className={styles["ticket-required"]}>
+                    <div id={styles["ticket-required"]}>
                     <label htmlFor="ticket-required-yes">
+                        Yes
                         <input
                             id="ticket-required-yes"
                             type="radio"
@@ -119,9 +121,9 @@ function EventForm({venueId}) {
                             name="ticketRequired"
                             {...register("ticketRequired")}
                         />
-                        Yes
                     </label>
                     <label htmlFor="ticket-required-no">
+                        No
                         <input
                             id="ticket-required-no"
                             type="radio"
@@ -129,7 +131,7 @@ function EventForm({venueId}) {
                             name="ticketRequired"
                             {...register("ticketRequired")}
                         />
-                        No
+
                     </label>
                     </div>
                     <label htmlFor="file">

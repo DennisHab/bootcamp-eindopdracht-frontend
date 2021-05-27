@@ -44,10 +44,12 @@
 }
 .scrollable-reviews {
     overflow: scroll;
+    overflow-x: hidden;
     height: 300px;
     border: #8B0D32 1px solid;
     padding: 10px;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 .venue-card h1 {
     border-bottom: #8B0D32 4px solid;

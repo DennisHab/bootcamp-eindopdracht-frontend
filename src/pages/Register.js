@@ -11,7 +11,8 @@ function Register() {
     const [userType, setUserType] = useState(null);
     const [backendError, setBackendError] = useState([]);
     const [addVenue, setAddVenue] = useState(false);
-    const [className, setClassName] = useState(`${styles.fieldset}`);
+    const [className, setClassName] = useState(`${styles["register-form"]}`);
+    const [formClassName, setFormClassName] = useState(`${styles["fieldsetafter"]}`)
     const [userOwner, setUserOwner] = useState(false);
     const [image, setImage] = useState('');
     const [fileDisabled, toggleFileDisabled] = useState(false);
@@ -53,7 +54,6 @@ function Register() {
                 venueName: data.venueName,
                 capacity: data.capacity,
                 image: image || data.image,
-
             })
             const getVenueId = await axios.get(`http://localhost:8080/usersOwner/${data.username}/venues/id`)
             const addAddressToVenue = await axios.post(`http://localhost:8080/usersOwner/${data.username}/venues/${getVenueId.data}/address`, {
@@ -64,8 +64,9 @@ function Register() {
                 country: data.country
             })
             }
-            history.push("/login");
             toggleSucces(true);
+            setTimeout(()=> {history.push("/login")}, 3000)
+
         } catch(e) {
             setBackendError([e.response.data.message]);
             console.error(e);
@@ -73,43 +74,40 @@ function Register() {
     }
     return(
         <div className={styles.container}>
-
             {/*Hier wordt de keuze gemaakt tussen een gewone account en een account voor horeca eigenaren dmv de userType state. In de backend
              wordt er onderscheid gemaakt tussen beide accountsoorten dus op basis van deze state wordt de postData endpoint bepaald. Als er gekozen
             wordt voor een eigenaarsaccount dan wordt ook de userOwner state op true gezet en zijn de relevante endpoints bereikbaar. Bovendien
             kan de eigenaar dan zijn horecalocatie alvast toevoegen of ervoor kiezen om dit later te doen.*/}
             {!userType && !userOwner &&
             <div className={styles["register-choice"]}>
-
             <button
                 type="submit"
-                onClick={()=> setUserType("usersNormal")}
+                onClick={()=> setUserType("usersNormal") & setFormClassName(`${styles["form-container"]}`)}
             >
                 REGISTER AS USER
             </button>
             <button
                 type="submit"
-                onClick={()=> setUserType("usersOwner") & setUserOwner(true)}
+                onClick={()=> setUserType("usersOwner") & setUserOwner(true) & setFormClassName(`${styles["form-container"]}`)}
             >
                 REGISTER AS VENUE OWNER
             </button>
             </div>}
-
             <form
-                className={styles["register-normal-user"]}
+                className={formClassName}
                 onSubmit={handleSubmit(onSubmit)}
             >
-            {userType  &&
+            {userType  && !addVenue &&
                 <fieldset className={className}>
                     <button
-                        onClick={()=>setUserType(null) & setUserOwner(false)}
+                        onClick={()=>setUserType(null) & setUserOwner(false) & setFormClassName(`${styles.fieldsetafter}`)}
                         onKeyUp={null}
                     >
                         Back
                     </button>
                     <h2> Please fill in your details here </h2>
                     <label htmlFor="username">
-                        Username:
+                        Username (Will be visible to other users on the platform)
                         <div className={styles.error}>{errors?.username?.message} </div>
                         <input
                             name="username"
@@ -186,15 +184,15 @@ function Register() {
                     Register and continue to website
                     </button>
                 {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
-                {succes && <p>You are ready to use Lively!</p>}
+                    {succes && <div className={styles.succes}>You have succesfully registered. Redirecting to login page....</div> }
                     </fieldset>
 
             }
                 {addVenue && <fieldset className={styles["add-venue"]}>
-                    {addVenue && <div><button className={styles.addlater} onClick={()=>setAddVenue(false) & setClassName(`${styles.fieldset}`)}> Add later</button></div>}
-                    <p>Please fill in venue information here</p>
+                    {addVenue && <div><button className={styles.addlater} onClick={()=>setAddVenue(false) & setClassName(`${styles["register-form"]}`)}> Add later</button></div>}
+                    <p>Please fill in venue information here. Fields marked with "*" are required</p>
                     <label htmlFor="venue-name">
-                        Venue name:
+                        Venue name*
                         <div className={styles.error}>{errors?.venueName?.message} </div>
                         <input
                             name="venueName"
@@ -204,7 +202,7 @@ function Register() {
                         />
                     </label>
                     <label htmlFor="capacity">
-                        Capacity:
+                        Capacity*
                         <div className={styles.error}>{errors?.capacity?.message} </div>
                         <input
                             name="capacity"
@@ -216,7 +214,7 @@ function Register() {
                     </label>
                     <h1>Location:</h1>
                     <label htmlFor="venue-street-name">
-                        Street name:
+                        Street name*
                         <div className={styles.error}>{errors?.streetName?.message} </div>
                         <input
                             name="streetName"
@@ -226,7 +224,7 @@ function Register() {
                         />
                     </label>
                     <label htmlFor="venue-house-nr">
-                        House number:
+                        House number*
                         <div className={styles.error}>{errors?.houseNumber?.message} </div>
                         <input
                             name="houseNumber"
@@ -243,12 +241,11 @@ function Register() {
                             name="postalCode"
                             id="postal-code"
                             type="text"
-                            {...register("postalCode", {required: "This field is required",
-                                maxLength:{value: 8}, message: "Postal code must be up to 8 characters long"})}
+                            {...register("postalCode", {maxLength:8, message: "Postal code must be up to 8 characters long"})}
                         />
                     </label>
                     <label htmlFor="city">
-                        City:
+                        City*
                         <div className={styles.error}>{errors?.city?.message} </div>
                         <input
                             name="city"
@@ -265,8 +262,7 @@ function Register() {
                             name="country"
                             id="country"
                             type="text"
-                            {...register("country", {required: "This field is required",
-                                maxLength:{value: 40}, message: "Country must be up to 40 characters long"})}
+                            {...register("country", {maxLength: 40, message: "Country must be up to 40 characters long"})}
                         />
                     </label>
                     <label htmlFor="file">
@@ -293,6 +289,7 @@ function Register() {
                         />
                     </label>
                     {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
+                    {succes && <div className={styles.succes}>You have succesfully registered. Redirecting to login page....</div> }
                     <button type="submit"> Add venue and register</button>
                     </fieldset>
                 }

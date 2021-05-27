@@ -8,7 +8,9 @@ function  AddReview({type, id}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [backendError, setBackendError] = useState([]);
     const [sliderRating, setSliderRating] = useState(5);
+    const [succes, setSucces] = useState(false);
     const {user} = useContext(AuthContext);
+    const today = new Date();
 
     function slideRight(){
         if(sliderRating < 10){
@@ -24,12 +26,16 @@ function  AddReview({type, id}) {
         try{
             const addReview = await axios.post(`http://localhost:8080/users/${user.username}/reviews/${type}/${id}`, {
                 reviewContent : data.reviewContent,
-                rating : data.rating
+                rating : sliderRating,
+                date: today
             })
-            window.location.reload(false);
+            setSucces(true);
+            setTimeout(()=>window.location.reload(false), 3000)
+           /* window.location.reload(false);*/
         }
         catch (e){
             console.error(e)
+            setBackendError(e)
         }
     }
 
@@ -39,10 +45,9 @@ function  AddReview({type, id}) {
                 <fieldset className={styles["review-content"]}>
                     <label htmlFor="review-content">
                         <h2>Add review:</h2>
-                        <p>Review content:</p>
                         <textarea className={styles["review-content-textbox"]}
+                            placeholder="Write your review here"
                             name="reviewContent"
-                            type="text"
                             id="review-content"
                             {...register("reviewContent", {required: "This field is required",
                                 minLength:{value: 1}, message: "Review must be at least 1 character long."})}
@@ -51,19 +56,18 @@ function  AddReview({type, id}) {
                     <div className={styles["slider-container"]}>
                     <label htmlFor="review-rating">
                         Rate this {type}
-                        <button onClick={slideLeft}>{"<"}</button>
+                        <button id={styles["button-left"]} type="button" onClick={slideLeft}>{"<"}</button>
                         <p>{sliderRating}</p>
-                        <button onClick={slideRight}>{">"}</button>
+                        <button id={styles["button-right"]} type="button" onClick={slideRight}>{">"}</button>
                     </label>
                     </div>
+                    {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
+                    {succes && <div className={styles.succes}> Review submitted</div> }
                     <button type="submit">Add review</button>
-
                 </fieldset>
             </form>
         </div>
-
     )
-
 }
 
 export default AddReview;

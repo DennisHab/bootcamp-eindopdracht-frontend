@@ -26,15 +26,14 @@ function Login() {
         }
     }
     return (
-
         <form
             onSubmit={handleSubmit(onSubmit)}
             className={styles.container}>
             <fieldset className={styles.fieldset}>
                 <label htmlFor="username">
-                    Username:
                     <div className={styles.error}>{errors?.username?.message} </div>
                     <input
+                        placeholder="Username"
                         name="username"
                         id="username"
                         type="text"
@@ -42,9 +41,9 @@ function Login() {
                     />
                 </label>
                 <label htmlFor="password">
-                    Password:
                     <div className={styles.error}>{errors?.password?.message} </div>
                     <input
+                        placeholder="Password"
                         name="password"
                         id="password"
                         type="password"

@@ -24,19 +24,24 @@ function Events() {
 
     return (
         <div className={styles.container}>
-
+            <div className={styles["event-container"]}>
             {eventData !== null ? <>
-                {eventData.map((event)=> { return <div className={styles["venue-container"]}>
-                    {event.image !== null && <img src={event.image}/>}
-                    {event.image === null && <img src={NoImage}/> }
+                {eventData.map((event)=> { return(
                     <EventCard
+                        image={event.image}
                         name={event.name}
-                        link={event.id}
                         venue={event.venue.venueName}
-                    />
-                </div>})}
+                        id={event.id}
+                        date={event.date}
+                        time={event.time}
+                        description={event.eventDescription}
+                        type={event.type}
+                        rating={event.rating}
+                        ticketRequired={event.ticketRequired}
+                    />)
+                })}
             </>   : <h1>LOADING.....</h1>}
-
+            </div>
         </div>
     )
 }

@@ -1,0 +1,24 @@
+.venue-rating {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    color: #E6E6E6;
+    background-color: green;
+    border: #E6E6E6 2px solid;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    margin-left: 100px;
+}
+
+.single-review {
+    border: #8B0D32 2px solid;
+    margin:10px;
+    border-radius: 10px;
+    text-align: start;
+    padding: 10px;
+}
+.review-header {
+    display: flex;
+    flex-direction: row;
+}
