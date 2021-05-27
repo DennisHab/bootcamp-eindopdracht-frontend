@@ -8,15 +8,18 @@
     display: flex;
     width: 60%;
 }
-.event-list{
+.review-list{
     display: flex;
     flex-direction: column;
 }
-.event-list li {
+.review-list li {
+    background-color: #E6E6E6;
+    border-radius: 10px;
     width: 100%;
     margin-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
-.event-navigation {
+.review-navigation {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -35,7 +38,7 @@
     width: 70%;
     margin-left: 100px;
 }*/
-.event-navigation button {
+.review-navigation button {
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     border-radius: 5px;
     height: fit-content;

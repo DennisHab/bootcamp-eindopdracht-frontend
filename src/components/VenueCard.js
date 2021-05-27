@@ -110,22 +110,24 @@ return(
                             </>)
                         })
                         }</>
-                    }</>: <p>No events have been added to this venue yet.</p>}
-                    {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue(id) && <>
-                    {!addEvent ? <>
+                    }</>: <p>No events have been added to this venue yet.</p>} <div className={styles["bottom-navigation"]}>
+                    {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue(id) &&
+
                         <RemoveVenueButton
                             venueId={id}
-                        />
-                        <button onClick={() => toggleAddEvent(true)}> Add event
-                        to {name}</button></> :
+                        />}
+                        {!addEvent ?
+                            <button onClick={() => toggleAddEvent(true)}> Add event
+                        to {name}</button> :
                         <button onClick={() => toggleAddEvent(false)}> Add later</button>}
-                    </>
-                    }
+                </div>
+
                     {addEvent &&
                     <EventForm
                         venueId={id}
                     />
                     }
+
                 </section>
                 <Link className={styles["venue-link"]} to={`/venues/${id}`}>
                     <h2>See more</h2>

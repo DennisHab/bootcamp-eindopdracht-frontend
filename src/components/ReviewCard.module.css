@@ -18,6 +18,9 @@
     text-align: start;
     padding: 10px;
 }
+.single-review p {
+    font-weight: bold;
+}
 .review-header {
     display: flex;
     flex-direction: row;

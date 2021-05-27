@@ -1,27 +1,26 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import styles from './Venues.module.css';
 import VenueCard from "../components/VenueCard";
-import {useForm} from "react-hook-form";
 import SearchBar from "../components/SearchBar";
 
 function Venues() {
     const [venueData, setVenueData] = useState([]);
+    const [customVenueData, setCustomVenueData] = useState([]);
     const [defaultVenueData, setDefaultVenueData] = useState([]);
-    const {register, handleSubmit, formState: {errors}} = useForm();
     const [input, setInput] = useState("");
     const [venuesPerPage, setVenuesPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageNumberLimit, setpageNumberLimit] = useState(5);
     const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
     const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
-    const [pagedVenueData, setPagedVenueData] = useState([]);
 
     async function getVenues() {
         try{
             const getVenues = await axios.get('http://localhost:8080/venues')
             setVenueData(getVenues.data)
             setDefaultVenueData(getVenues.data)
+            if(customVenueData.length === 0){setCustomVenueData(getVenues.data)}
         }
         catch(e){
             console.error(e)
@@ -29,28 +28,41 @@ function Venues() {
     }
     useEffect(()=> {
         getVenues()
+        renderVenues(currentVenues)
+    }, [customVenueData])
 
-    }, [])
-
+    //Functie die alle venues sorteert op naam en vervolgens het resultaat in customvenuedata zet
     async function sortVenuesByName(){
         const sortedByName = defaultVenueData.sort((a,b)=>{
-            return a.venueName - b.venueName
+            const  nameA = a.venueName.toUpperCase();
+            const nameB = b.venueName.toUpperCase();
+            if (nameA < nameB) return -1
+            if (nameA > nameB) return 1
+            return 0
         })
-        setPagedVenueData(sortedByName)
-        pagedVenueData.slice(indexOfFirstItem, indexOfLastItem);
-        setCurrentPage(1);
+        setCustomVenueData(sortedByName)
     }
-
+    //Functie die alle venues sorteert op stad en vervolgens het resultaat in customvenuedata zet
+    async function sortVenuesByCity(){
+        const sortedByCity = defaultVenueData.sort((a,b)=>{
+            const  cityA = a.address.city.toUpperCase();
+            const cityB = b.address.city.toUpperCase();
+            if (cityA < cityB) return -1
+            if (cityA > cityB) return 1
+            return 0
+        })
+        setCustomVenueData(sortedByCity)
+    }
+    //Functie die de venueData filtert op basis van de input in de zoekbalk. Resultaten worden direct getoond. Huidige pagina wordt aangepast naar 1.
     async function updateInput(input){
         const filtered = defaultVenueData.filter((venue)=>{
             return venue.venueName.toLowerCase().includes(input.toLowerCase()) || venue.address.city.toLowerCase().includes(input.toLowerCase())
         })
         setInput(input)
-        setPagedVenueData(filtered)
-        pagedVenueData.slice(indexOfFirstItem, indexOfLastItem);
-        setCurrentPage(1);
+        setCustomVenueData(filtered)
+        setCurrentPage(1)
     }
-
+    //Functie die alle venues in een venuecard component mapped.
     const renderVenues = (venueData)=> { return(
         <ul className={styles["venue-list"]}>
             {venueData.map((venue, index)=> { return(
@@ -58,7 +70,6 @@ function Venues() {
                     <VenueCard
                         index={index}
                         image={venue.image}
-                        data={venueData}
                         city={venue.address.city}
                         name={venue.venueName}
                         events={venue.events}
@@ -72,17 +83,20 @@ function Venues() {
             )})}
         </ul>
     )}
+    //Variabele en loop voor het bepalen van het aantal benodigde pagina's.
     const pages = [];
-    for (let i = 1; i <= Math.ceil(venueData.length / venuesPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(customVenueData.length / venuesPerPage); i++) {
         pages.push(i);
     }
+    //Variabelen die ervoor zorgen dat het juiste aantal venues per pagina wordt getoond dmv de eerder ingestelde state.
     const indexOfLastItem = currentPage*venuesPerPage;
     const indexOfFirstItem = indexOfLastItem - venuesPerPage;
-    const currentVenues = venueData.slice(indexOfFirstItem, indexOfLastItem);
-
+    const currentVenues = customVenueData.slice(indexOfFirstItem, indexOfLastItem);
+    //Functie die een click op een van de pagina list items verwerkt en de juiste pagina laat zien.
     const handleClick = (event) => {
         setCurrentPage(Number(event.target.id));
     };
+    //Functie die het benodigde aantal list items mapped in de paginabalk.
     const renderPageNumbers = pages.map((number) => {
         if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) {
             return (
@@ -100,6 +114,7 @@ function Venues() {
             return null;
         }
     });
+    //Functies voor het veranderen van pagina met de next en prev button.
     const handleNextbtn = () => {
         setCurrentPage(currentPage + 1);
 
@@ -126,7 +141,7 @@ function Venues() {
                     setQuery={updateInput}
                     placeholder="Search by venue name or city"
                 />
-                <button> Sort by city</button>
+                <button onClick={()=>sortVenuesByCity()}> Sort by city</button>
             </section>
             <ul className={styles["pageNumbers"]}>
                 <li id={styles["button-prev"]}>
@@ -147,11 +162,10 @@ function Venues() {
                     </button>
                 </li>
             </ul>
-            {!input  && renderVenues(currentVenues)}
-            {input && renderVenues(pagedVenueData)}
+            {renderVenues(currentVenues)}
 
         </div>
     )
 }
 
-export default Venues;
+export default Venues
