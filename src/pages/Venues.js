@@ -105,7 +105,7 @@ function Venues() {
                     id={number}
                     value={number}
                     onClick={handleClick}
-                    className={currentPage == number ? `${styles.active}` : null}
+                    className={currentPage === number ? `${styles.active}` : null}
                 >
                     {number}
                 </li>

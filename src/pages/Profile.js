@@ -10,6 +10,7 @@ import EventForm from "../components/EventForm";
 import PasswordChange from "../components/PasswordChange";
 import VenueCard from "../components/VenueCard";
 import EventCard from "../components/EventCard";
+import ReviewCard from "../components/ReviewCard";
 
 function Profile() {
     const history = useHistory();
@@ -23,20 +24,31 @@ function Profile() {
     const [passwordChange, togglePasswordChange] = useState(false);
     const [userEvents, setUserEvents] = useState([]);
     const [venueId, setVenueId] = useState(0);
+    const [filterEvents, toggleFilterEvents] = useState(false)
 
     //AddUserEvents wordt aangeroepen om alle events van de ingelogde user op te halen.
-    function addUserEvents() {
-        if (user.authorities[0].authority === "ROLE_USERSOWNER") {
-            const userVenueList = user.venueList
-            for (let i = 0; i < userVenueList.length; i++) {
-                setUserEvents(userVenueList[i].events)
-            }
+    const userVenueList = user.venueList
+    const res = []
+    async function addUserEvents() {
+        if(user.authorities[0].authority === "ROLE_USERSOWNER"){
+           for(let i=0; i<userVenueList.length; i ++){
+               if (userVenueList[i].events.length > 0){
+               const events= userVenueList[i].events.concat();
+               res.push(events)}
+           }
+        setUserEvents([].concat.apply([],res))
+        console.log(userEvents)}
         }
-    }
+    //Variabelen voor het sorteren op datum.
+    const today= new Date();
+    const date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+
+    // Zodra een eigenaar in de tab 'My events' alleen aankomende evenementen wil zien kan hij op een knop klikken die
+    // de filterEvents state op true zet en de events in het verleden filtert.
     useEffect(() => {
-            addUserEvents()
+        if(!filterEvents){addUserEvents()}
         }
-        , [])
+        , [filterEvents])
 
     async function onSubmit(data) {
         try {
@@ -196,6 +208,13 @@ function Profile() {
             }
             {currentTab === "events" &&
             <section className={styles.events}>
+                <div className={styles["event-navigation"]}>
+                    {!filterEvents ?
+                    <button onClick={()=> setUserEvents(userEvents.filter((evente)=>{
+                        return  new Date(evente.date.split('-').reverse()) > new Date(date.split('-').reverse())
+                    })) & toggleFilterEvents(!filterEvents)}> Only show upcoming events </button> :
+                    <button onClick={()=> setUserEvents(userEvents) & toggleFilterEvents(!filterEvents)}> Show all events </button>}
+                </div>
                 {userEvents.map((userEvent) => {
                     return (
                         <div className={styles["event-cards"]}>
@@ -235,6 +254,22 @@ function Profile() {
                             />
                         </div>)
                 }) : <h1>No favourite events yet</h1>}
+            </section>
+            }
+            {currentTab === "reviews" &&
+            <section className={styles.reviews}>
+                {user.reviews.length > 0 ? user.reviews.map((review) => {
+                    return (
+                        <div className={styles["review-cards"]}>
+                            <ReviewCard
+                                date={review.date}
+                                content={review.reviewContent}
+                                user={review.user}
+                                rating={review.rating}
+                                venueEvent={review.event ? "Event: " + review.event.name  : "Venue: " + review.venue.venueName}
+                            />
+                        </div>)
+                }) : <h1>No reviews yet!</h1>}
             </section>
             }
         </div>

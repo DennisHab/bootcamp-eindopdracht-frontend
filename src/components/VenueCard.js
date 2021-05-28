@@ -23,7 +23,6 @@ function VenueCard({ name, city, events, id, image, facebook, website, instagram
     const eventsFiltered = eventsSorted.filter((evente)=>{
         return  new Date(evente.date.split('-').reverse()) > new Date(date.split('-').reverse())
     })
-
     function isUserVenue(id) {
         let userVenue = false
         user.venueList.map((venue)=>{
@@ -116,18 +115,17 @@ return(
                         <RemoveVenueButton
                             venueId={id}
                         />}
-                        {!addEvent ?
+                        {!addEvent && user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
                             <button onClick={() => toggleAddEvent(true)}> Add event
-                        to {name}</button> :
-                        <button onClick={() => toggleAddEvent(false)}> Add later</button>}
+                        to {name}</button>}
+                        {addEvent && user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
+                            <button onClick={() => toggleAddEvent(false)}> Add later</button>}
                 </div>
-
                     {addEvent &&
                     <EventForm
                         venueId={id}
                     />
                     }
-
                 </section>
                 <Link className={styles["venue-link"]} to={`/venues/${id}`}>
                     <h2>See more</h2>

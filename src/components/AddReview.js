@@ -30,7 +30,7 @@ function  AddReview({type, id}) {
                 date: today
             })
             setSucces(true);
-            setTimeout(()=>window.location.reload(false), 3000)
+            setTimeout(()=>window.location.reload(false), 1000)
            /* window.location.reload(false);*/
         }
         catch (e){

@@ -107,10 +107,11 @@ function Register() {
                     </button>
                     <h2> Please fill in your details here </h2>
                     <label htmlFor="username">
-                        Username (Will be visible to other users on the platform)
+                        Username
                         <div className={styles.error}>{errors?.username?.message} </div>
                         <input
                             name="username"
+                            placeholder="Your username will be visible to other users on the platform"
                             id="username"
                             type="text"
                             {...register("username", {required: "Username is required",

@@ -7,6 +7,7 @@ import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
 
 
+
 function Events() {
     const [eventData, setEventData] = useState([]);
     const [customEventData, setCustomEventData] = useState([]);
@@ -17,6 +18,9 @@ function Events() {
     const [pageNumberLimit] = useState(5);
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+    const [filterEvents, toggleFilterEvents] = useState(false);
+    const today= new Date();
+    const date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
 
     async function getEvents() {
         try{
@@ -137,13 +141,23 @@ function Events() {
     return (
         <div className={styles.container}>
             <section className={styles["event-navigation"]}>
+                <div className={styles["event-navigation-buttons"]}>
                 <button onClick={()=>sortEventsByDate()}> Sort by date</button>
+                {!filterEvents ?
+                    <button onClick={()=> setCustomEventData(customEventData.filter((evente)=>{
+                        return  new Date(evente.date.split('-').reverse()) > new Date(date.split('-').reverse())
+                    })) & toggleFilterEvents(!filterEvents)}> Show upcoming events </button> :
+                    <button onClick={()=> setCustomEventData(defaultEventData) & toggleFilterEvents(!filterEvents)}> Show all events </button>}
+
+                <button onClick={()=>sortEventsByVenue()}> Sort by venue</button>
+                </div>
+                <div className={styles["event-navigation-searchbar"]}>
                 <SearchBar
                     query={input}
                     setQuery={updateInput}
                     placeholder="Search by city, venuename or eventname"
                 />
-                <button onClick={()=>sortEventsByVenue()}> Sort by venue</button>
+                </div>
             </section>
             <ul className={styles["pageNumbers"]}>
                 <li id={styles["button-prev"]}>

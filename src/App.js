@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import TopMenu from "./components/TopMenu";
 import Home from "./pages/Home";
@@ -12,8 +12,11 @@ import Venues from "./pages/Venues";
 import Reviews from "./pages/Reviews";
 import SingleVenue from "./pages/SingleVenue";
 import SingleEvent from "./pages/SingleEvent";
+import PrivateRoute from "./components/PrivateRoute";
+import {AuthContext} from "./context/AuthContext";
 
 function App() {
+  const {user} = useContext(AuthContext)
   return (
         <>
           <TopMenu/>
@@ -33,9 +36,10 @@ function App() {
             <Route exact path="/register">
               <Register/>
             </Route>
-            <Route exact path="/profile">
-              <Profile/>
-            </Route>
+            <PrivateRoute
+                path="/profile"
+                component={<Profile />}
+            />
             <Route exact path="/events">
               <Events/>
             </Route>

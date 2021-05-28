@@ -3,7 +3,6 @@ import axios from "axios";
 import ReviewCard from "../components/ReviewCard";
 import SearchBar from "../components/SearchBar";
 import styles from "./Reviews.module.css";
-import EventCard from "../components/EventCard";
 
 function Reviews() {
     const [reviewData, setReviewData] = useState([]);
@@ -56,15 +55,18 @@ function Reviews() {
     async function updateInput(input){
         const filtered = defaultReviewData.filter((review)=>{
             if(review.event !== null){
-                review.event.name.toLowerCase().includes(input.toLowerCase())
-            } else if(review.venue !== null) {
-                review.venue.venueName.toLowerCase().includes(input.toLowerCase())
-            }return review.userNormal.username.toLowerCase().includes(input.toLowerCase())
-        })
+                return(review.event.name.toLowerCase().includes(input.toLowerCase()) ||
+                review.userNormal.username.toLowerCase().includes(input.toLowerCase()))
+            } else if(review.venue !== null){
+                return(review.venue.venueName.toLowerCase().includes(input.toLowerCase()) ||
+                        review.userNormal.username.toLowerCase().includes(input.toLowerCase()))
+            }
+            })
         setInput(input)
         setCustomReviewData(filtered)
         setCurrentPage(1)
-    }
+        }
+
     //Functie die alle reviews in een reviewcard component mapped.
     const renderReviews = (reviewData)=> { return(
         <ul className={styles["review-list"]}>
@@ -75,6 +77,7 @@ function Reviews() {
                         content = {review.reviewContent}
                         rating = {review.rating}
                         date = {review.date}
+                        venueEvent={review.event ? "Event: " + review.event.name  : "Venue: " + review.venue.venueName}
                     />
                 </li>
             )})}

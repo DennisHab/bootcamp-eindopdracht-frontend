@@ -2,7 +2,7 @@ import react from "react";
 import styles from "./ReviewCard.module.css";
 import React from "react";
 
-function ReviewCard({user, content, rating, date}){
+function ReviewCard({user, content, rating, date, venueEvent}){
     function setBackground(rating){
         if (rating >= 10){
             return "darkgreen"
@@ -26,10 +26,12 @@ function ReviewCard({user, content, rating, date}){
     return(
     <div className={styles["single-review"]}>
         <header className={styles["review-header"]}>
-            <span><p>By:</p> {user} <p>Placed on:</p>{date}</span>
+            <span><p>Review for: </p> {venueEvent} </span>
+            <span><p>User:</p> {user} </span>
+            <span><p>Placed on:</p>{date}</span>
             <div className={styles["venue-rating"]} style={{backgroundColor: `${setBackground(rating)}`}}>{rating}</div>
         </header>
-            <span><p>Review:</p> {content}</span>
+            <div className={styles["review-content"]}><p>Review:</p> {content}</div>
     </div>
     )
 }

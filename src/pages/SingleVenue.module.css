@@ -4,8 +4,7 @@
     justify-content: center;
     align-items: center;
 }
-.container img {
-    position: absolute;
+.venuecard-image img{
     left: 200px;
     top: 300px;
     width: 200px;
@@ -15,6 +14,12 @@
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     border-radius: 10px;
 }
+.venuecard-image {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
 .venue-card {
     position: relative;
     display: flex;
@@ -25,7 +30,7 @@
     border-radius: 10px;
     border: 2px #E6E6E6 solid;
     color: #8B0D32;
-    width: 50%;
+    width: 60%;
     height: fit-content;
     margin-top: 25px;
 }
@@ -44,20 +49,25 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: rgba(230, 230, 230, 0.9);
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     border-radius: 10px;
     border: none;
     color: #8B0D32;
-    width: 40%;
+    width: 92%;
     padding:20px;
     margin: 20px;
+}
+.venue-reviews h2 {
+    background-color: #8B0D32;
+    text-align: center;
+    color: #E6E6E6;
+    border-radius: 25px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 .scrollable-reviews {
     overflow: scroll;
     overflow-x: hidden;
     height: 300px;
-    border: #8B0D32 2px solid;
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
@@ -92,18 +102,38 @@
     font-weight: bold;
     margin: 2px;
 }
+.venue-table {
+    width: 100%;
+    margin: 2px;
+    text-align: center;
+    border: #8B0D32 1px solid;
+    border-radius: 10px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+.venue-table td {
+    text-align: left;
+    width:20%;
+}
+.venue-table th {
+    text-align: left;
+}
 .single-review {
     border: #8B0D32 2px solid;
     margin:10px;
+    width: 100%;
     border-radius: 10px;
     text-align: start;
     padding: 10px;
 }
-
-.venuecard-image {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+.venuecard-content {
+    padding: 10px;
+    text-align: center;
+}
+.venuecard-content h3 {
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    background-color: #8B0D32;
+    color: #E6E6E6;
+    padding: 2px;
+    border-radius: 10px;
+    border: 1px #E6E6E6 solid;
 }

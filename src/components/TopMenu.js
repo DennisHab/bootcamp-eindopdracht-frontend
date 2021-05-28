@@ -37,7 +37,11 @@ function TopMenu() {
                         </NavLink>
                     </li>
                     <li>
-                        <button onClick={logout}> Logout</button>
+                        <NavLink to="/" className={styles.profile} activeClassName={styles["profile-active"]}>
+                            <span onClick={logout}>
+                            Logout
+                            </span>
+                        </NavLink>
                     </li>
                 </ul>
             </nav>}
