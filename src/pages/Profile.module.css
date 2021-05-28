@@ -204,7 +204,9 @@
     border-radius: 0 0 10px 10px;
 }
 .review-cards {
-    width: 60%;
+    justify-content: center;
+    display: flex;
+    width: 100%;
 }
 .event-navigation {
     border-bottom: 1px solid #8B0D32;

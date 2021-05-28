@@ -36,18 +36,27 @@ function Events() {
     }
 
     useEffect(()=> {
-        getEvents()
-        renderEvents(currentEvents)
+        if(!input && filterEvents){
+        renderEvents(currentEvents)}
+        else if(!input){getEvents()}
     }, [customEventData])
 
     //Functie die alle events sorteert op datum en vervolgens het resultaat in customeventdata zet
     async function sortEventsByDate(){
+        if(!input){
         const sortedByDate = defaultEventData.sort((a,b) => { return(
             new Date(a.date.split('-').reverse()) - new Date(b.date.split('-').reverse()))})
         setCustomEventData(sortedByDate)
+        }else {
+            const sortedByDate = customEventData.sort((a,b) => { return(
+                new Date(a.date.split('-').reverse()) - new Date(b.date.split('-').reverse()))})
+            setCustomEventData(sortedByDate)
+        }
+
     }
     //Functie die alle venues sorteert op venue en vervolgens het resultaat in customeventdata zet
     async function sortEventsByVenue(){
+        if(!input){
         const sortedByVenue = defaultEventData.sort((a,b)=>{
             const  cityA = a.venue.venueName.toUpperCase();
             const cityB = b.venue.venueName.toUpperCase();
@@ -55,7 +64,17 @@ function Events() {
             if (cityA > cityB) return 1
             return 0
         })
-        setCustomEventData(sortedByVenue)
+        setCustomEventData(sortedByVenue)}
+        else{
+            const sortedByVenue = customEventData.sort((a,b)=>{
+                const  cityA = a.venue.venueName.toUpperCase();
+                const cityB = b.venue.venueName.toUpperCase();
+                if (cityA < cityB) return -1
+                if (cityA > cityB) return 1
+                return 0
+            })
+            setCustomEventData(sortedByVenue)
+        }
     }
     //Functie die de eventData filtert op basis van de input in de zoekbalk. Resultaten worden direct getoond. Huidige pagina wordt aangepast naar 1.
     async function updateInput(input){
@@ -64,6 +83,7 @@ function Events() {
                 || event.venue.address.city.toLowerCase().includes(input.toLowerCase())
                 || event.venue.venueName.toLowerCase().includes(input.toLowerCase())
         })
+        toggleFilterEvents(false)
         setInput(input)
         setCustomEventData(filtered)
         setCurrentPage(1)

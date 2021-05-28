@@ -27,8 +27,8 @@ function Venues() {
         }
     }
     useEffect(()=> {
-        getVenues()
-        renderVenues(currentVenues)
+        if(!input){getVenues()
+        renderVenues(currentVenues)}
     }, [customVenueData])
 
     //Functie die alle venues sorteert op naam en vervolgens het resultaat in customvenuedata zet
