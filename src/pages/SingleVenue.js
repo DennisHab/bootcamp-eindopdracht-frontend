@@ -10,8 +10,6 @@ import Facebook from "../assets/facebook.png";
 import Website from "../assets/website.png";
 import ReviewCard from "../components/ReviewCard";
 
-
-
 function SingleVenue() {
     const [venueData, setVenueData] = useState(null);
     const {user} = useContext(AuthContext);
@@ -21,7 +19,6 @@ function SingleVenue() {
         async function getVenue() {
             try{
                 const getVenue = await axios.get(`http://localhost:8080/venues/${id}`);
-                const {events} = await axios.get(`http://localhost:8080/venues/${id}`);
                 setVenueData(getVenue.data);
                 console.log(venueData);
             }
@@ -69,8 +66,8 @@ function SingleVenue() {
                         {venueData.rating !== 0 &&<div className={styles["venue-rating"]}style={{backgroundColor: `${setBackground(venueData.rating)}`}}>{venueData.rating}</div>}
                     </header>
                     <div className={styles["venuecard-image"]}>
-                        {venueData.image !== null && <img src={venueData.image}/>}
-                        {venueData.image === null && <img src={NoImage}/> }
+                        {venueData.image !== null && <img src={venueData.image} alt=""/>}
+                        {venueData.image === null && <img src={NoImage} alt=""/> }
                     </div>
                     <div className={styles["venuecard-content"]}>
                     <h3>Address:</h3>
@@ -80,15 +77,15 @@ function SingleVenue() {
                     <div className={styles["social-media"]}>
                         {venueData.instagram &&
                         <a href={venueData.instagram}>
-                            <img src={Instagram} width="30px" height="30px"/>
+                            <img src={Instagram} width="30px" height="30px" alt=""/>
                         </a>}
                         {venueData.facebook &&
                         <a href={venueData.facebook}>
-                            <img src={Facebook} width="30px" height="30px"/>
+                            <img src={Facebook} width="30px" height="30px" alt=""/>
                         </a>}
                         {venueData.website &&
                         <a href={venueData.website}>
-                            <img src={Website} width="30px" height="30px"/>
+                            <img src={Website} width="30px" height="30px" alt=""/>
                         </a>}
                     </div>
                         {venueData ?

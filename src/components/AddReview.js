@@ -11,6 +11,11 @@ function  AddReview({type, id}) {
     const [succes, setSucces] = useState(false);
     const {user} = useContext(AuthContext);
     const today = new Date();
+    const Token = localStorage.getItem('jwt');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+    }
 
     function slideRight(){
         if(sliderRating < 10){
@@ -24,14 +29,15 @@ function  AddReview({type, id}) {
     }
     async function onSubmit(data){
         try{
-            const addReview = await axios.post(`http://localhost:8080/users/${user.username}/reviews/${type}/${id}`, {
+            const addReview = await axios.post(`http://localhost:8080/user/${user.username}/reviews/${type}/${id}`, {
                 reviewContent : data.reviewContent,
                 rating : sliderRating,
                 date: today
+            },{
+                headers:headers
             })
             setSucces(true);
             setTimeout(()=>window.location.reload(false), 1000)
-           /* window.location.reload(false);*/
         }
         catch (e){
             console.error(e)
@@ -45,6 +51,7 @@ function  AddReview({type, id}) {
                 <fieldset className={styles["review-content"]}>
                     <label htmlFor="review-content">
                         <h2>Add review:</h2>
+                        <div className={styles.error}>{errors?.reviewContent?.message} </div>
                         <textarea className={styles["review-content-textbox"]}
                             placeholder="Write your review here"
                             name="reviewContent"

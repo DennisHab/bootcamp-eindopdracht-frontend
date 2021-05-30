@@ -2,14 +2,14 @@ import {Link} from "react-router-dom";
 import styles from "./EventCard.module.css";
 import NoImage from "../assets/no-image-found-360x250.png";
 import React, {useContext} from "react";
-import AddFavouriteEventButton from "./AddFavouriteEventButton";
 import {AuthContext} from "../context/AuthContext";
+import AddFavouriteEventButton from "./AddFavouriteEventButton";
 import RemoveFavouriteEventButton from "./RemoveFavouriteEventButton";
-import RemoveVenueButton from "./RemoveVenueButton";
 import RemoveEventButton from "./RemoveEventButton";
 
-function EventCard({image, name, venue, id, venueId, date, time, type, description, rating, ticketRequired}){
+function EventCard({image, name, venue, venueCity, id, venueId, date, time, type, description, rating, ticketRequired}){
     const {user} = useContext(AuthContext);
+
     function isUserVenue() {
         let userVenue = false
         user.venueList.map((UserVenue)=>{
@@ -40,23 +40,24 @@ function EventCard({image, name, venue, id, venueId, date, time, type, descripti
             return "darkred"
         }
     }
+
+
     function isUserFavourite(){
         let UserFavourite = false
-        {user.favouredEvents.map((evente)=>{
+        user.favouredEvents.map((evente)=>{
            if (evente.id === id){
                UserFavourite = true
            }        }
-        )}
+        )
         return UserFavourite;
     }
     return(
         <div className={styles.container}>
-            {image && <img className={styles["event-image"]} src={image}/>}
-            {!image && <img className={styles["event-image"]} src={NoImage}/> }
-
+            {image && <img className={styles["event-image"]} src={image} alt=""/>}
+            {!image && <img className={styles["event-image"]} src={NoImage} alt=""/> }
             <div className={styles["event-card"]}>
                 <header className={styles["event-header"]}>
-                    <h1>{name} at {venue}</h1>
+                    <h1>{name} at {venue} in {venueCity}</h1>
                     {rating !== 0 &&
                     <div id={styles["event-rating"]} style={{backgroundColor: `${setBackground(rating)}`}}>
                         <h2>{rating}</h2>
@@ -87,20 +88,18 @@ function EventCard({image, name, venue, id, venueId, date, time, type, descripti
                             eventId={id}
                         />}
                     {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue() &&
-                                <RemoveEventButton
-                                    venueId={venueId}
-                                    eventId={id}
-                                />
+                        <RemoveEventButton
+                            venueId={venueId}
+                            eventId={id}
+                        />
                     }
-
                 </section>
                 <Link className={styles["event-link"]} to={`/events/${id}`}>
                     <h2>See more</h2>
                 </Link>
             </div>
-
         </div>
     )
 }
-
 export default EventCard;
+

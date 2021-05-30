@@ -11,6 +11,7 @@ import PasswordChange from "../components/PasswordChange";
 import VenueCard from "../components/VenueCard";
 import EventCard from "../components/EventCard";
 import ReviewCard from "../components/ReviewCard";
+import RemoveAccountButton from "../components/RemoveAccountButton";
 
 function Profile() {
     const history = useHistory();
@@ -25,6 +26,11 @@ function Profile() {
     const [userEvents, setUserEvents] = useState([]);
     const [venueId, setVenueId] = useState(0);
     const [filterEvents, toggleFilterEvents] = useState(false)
+    const Token = localStorage.getItem('jwt');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+    }
 
     //AddUserEvents wordt aangeroepen om alle events van de ingelogde user op te halen.
     const userVenueList = user.venueList
@@ -53,21 +59,25 @@ function Profile() {
     async function onSubmit(data) {
         try {
             if (!addressChange) {
-                const addAddress = await axios.post(`http://localhost:8080/users/${user.username}/addresses`, {
+                const addAddress = await axios.post(`http://localhost:8080/user/${user.username}/addresses`, {
                     streetName: data.streetName,
                     houseNumber: data.houseNumber,
                     postalCode: data.postalCode,
                     city: data.city,
                     country: data.country
+                }, {
+                    headers : headers
                 })
             }
             if (addressChange) {
-                const changeAddress = await axios.put(`http://localhost:8080/users/${user.username}/addresses/${user.address.id}`, {
+                const changeAddress = await axios.put(`http://localhost:8080/user/${user.username}/addresses/${user.address.id}`, {
                     streetName: data.streetName,
                     houseNumber: data.houseNumber,
                     postalCode: data.postalCode,
                     city: data.city,
                     country: data.country
+                },{
+                    headers: headers
                 })
             }
             window.location.reload(false);
@@ -129,6 +139,7 @@ function Profile() {
                     </table>
                 </div>
                 <div className={styles["profile-options"]}>
+                    <RemoveAccountButton />
                     {!addressAdd ?
                         <button onClick={() => setAddressAdd(true)}>
                             Add address to profile
@@ -137,7 +148,7 @@ function Profile() {
                             Add later
                         </button>
                     }
-                    {!addressChange ?
+                    {!addressChange  ?
                         <button onClick={() => setAddressChange(true)}>
                             Change address
                         </button> :

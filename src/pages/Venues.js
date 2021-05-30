@@ -5,20 +5,18 @@ import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
 
 function Venues() {
-    const [venueData, setVenueData] = useState([]);
     const [customVenueData, setCustomVenueData] = useState([]);
     const [defaultVenueData, setDefaultVenueData] = useState([]);
     const [input, setInput] = useState("");
-    const [venuesPerPage, setVenuesPerPage] = useState(5);
+    const [venuesPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageNumberLimit, setpageNumberLimit] = useState(5);
+    const [pageNumberLimit] = useState(5);
     const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
     const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
     async function getVenues() {
         try{
             const getVenues = await axios.get('http://localhost:8080/venues')
-            setVenueData(getVenues.data)
             setDefaultVenueData(getVenues.data)
             if(customVenueData.length === 0){setCustomVenueData(getVenues.data)}
         }
@@ -126,7 +124,7 @@ function Venues() {
     const handlePrevbtn = () => {
         setCurrentPage(currentPage - 1);
 
-        if ((currentPage - 1) % pageNumberLimit == 0) {
+        if ((currentPage - 1) % pageNumberLimit === 0) {
             setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
             setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
         }
@@ -147,7 +145,7 @@ function Venues() {
                 <li id={styles["button-prev"]}>
                     <button
                         onClick={handlePrevbtn}
-                        disabled={currentPage == pages[0] ? true : false}
+                        disabled={currentPage === pages[0] ? true : false}
                     >
                         Prev
                     </button>
@@ -156,7 +154,7 @@ function Venues() {
                 <li id={styles["button-next"]}>
                     <button
                         onClick={handleNextbtn}
-                        disabled={currentPage == pages[pages.length - 1] ? true : false}
+                        disabled={currentPage === pages[pages.length - 1] ? true : false}
                     >
                         Next
                     </button>

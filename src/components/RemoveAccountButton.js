@@ -1,10 +1,9 @@
-import React, {useContext, useState} from "react";
-import axios from "axios";
 import {AuthContext} from "../context/AuthContext";
+import axios from "axios";
+import react, {useState, useContext} from "react";
 
-
-function RemoveEventButton({venueId, eventId}){
-    const {user} = useContext(AuthContext);
+function RemoveAccountButton(){
+    const {user, logout} = useContext(AuthContext);
     const [confirm, setConfirm] = useState(false);
     const [succes, setSucces] = useState(false);
     const Token = localStorage.getItem('jwt');
@@ -12,13 +11,13 @@ function RemoveEventButton({venueId, eventId}){
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${Token}`
     }
-
-    async function deleteEvent(){
+    async function deleteAccount(){
         try{
-            const deleteEvent = await axios.delete(`http://localhost:8080/userOwner/${user.username}/venues/${venueId}/${eventId}`,{
+            const deleteAccount = await axios.delete(`http://localhost:8080/deleteUser/${user.username}`,{
                 headers:headers
             })
             setSucces(true)
+            logout()
             setTimeout(()=> window.location.reload(false), 3000)
         }
         catch (e){
@@ -27,20 +26,20 @@ function RemoveEventButton({venueId, eventId}){
     }
     return(<>
         {!confirm && <button onClick={()=> setConfirm(true)}>
-            Remove Event
+            Remove Account
         </button>}
         {confirm &&
-        <div>Are you sure you want to remove this event?
-            <button onClick={deleteEvent}>
+        <div>Are you sure you want to remove your account?
+            <button onClick={deleteAccount}>
                 Yes
             </button>
             <button onClick={()=>setConfirm(false)}>
                 No
             </button>
-            {succes && <h1>Event succesfully deleted</h1>}
+            {succes && <h1>Account succesfully deleted</h1>}
         </div>
         }
     </>)
 }
 
-export default RemoveEventButton;
+export default RemoveAccountButton;

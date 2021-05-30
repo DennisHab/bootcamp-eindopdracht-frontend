@@ -1,6 +1,7 @@
 import React, {useState, useContext} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./EventForm.module.css";
+import {AuthContext} from "../context/AuthContext";
 import axios from "axios";
 
 function EventForm({venueId}) {
@@ -8,8 +9,13 @@ function EventForm({venueId}) {
     const [imageDisabled, toggleImageDisabled] = useState(false);
     const [fileDisabled, toggleFileDisabled] = useState(false);
     const [image, setImage] = useState("");
+    const {user}=useContext(AuthContext);
     const [backendError, setBackendError] = useState([]);
-
+    const Token = localStorage.getItem('jwt');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+    }
     function uploadImage(e) {
         const files = e.target.files[0];
         const formData = new FormData();
@@ -24,15 +30,10 @@ function EventForm({venueId}) {
                 .then(res => setImage(res.data.secure_url))
                 .catch(err => console.log(err));
         }}
-
-
     async function onSubmit(data){
-
-
         console.log(data)
         try{
-
-            const postEvent = await axios.post(`http://localhost:8080/venues/${venueId}/events`, {
+            const postEvent = await axios.post(`http://localhost:8080/userOwner/${user.username}/venues/${venueId}/events`, {
                 name: data.name,
                 type: data.type,
                 date: data.date,
@@ -40,13 +41,14 @@ function EventForm({venueId}) {
                 eventDescription: data.eventDescription,
                 ticketRequired: data.ticketRequired,
                 image: data.image || image
+            },{
+                headers:headers
             })
             window.location.reload(false)
             console.log(postEvent)
         }
         catch (e){
             console.error(e)
-
         }
     }
     return(
@@ -131,7 +133,6 @@ function EventForm({venueId}) {
                             name="ticketRequired"
                             {...register("ticketRequired")}
                         />
-
                     </label>
                     </div>
                     <label htmlFor="file">
@@ -158,11 +159,11 @@ function EventForm({venueId}) {
                             {...register("image")}
                         />
                     </label>
+                    {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
                     <button type="submit"> Add event</button>
                 </fieldset>
             </form>
         </div>
     )
 }
-
 export default EventForm;

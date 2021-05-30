@@ -5,20 +5,18 @@ import SearchBar from "../components/SearchBar";
 import styles from "./Reviews.module.css";
 
 function Reviews() {
-    const [reviewData, setReviewData] = useState([]);
     const [customReviewData, setCustomReviewData] = useState([]);
     const [defaultReviewData, setDefaultReviewData] = useState([]);
     const [input, setInput] = useState("");
-    const [reviewsPerPage, setReviewsPerPage] = useState(5);
+    const [reviewsPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageNumberLimit, setPageNumberLimit] = useState(5);
+    const [pageNumberLimit] = useState(5);
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
     async function getReviews() {
         try{
             const getReviews = await axios.get('http://localhost:8080/reviews')
-            setReviewData(getReviews.data)
             setDefaultReviewData(getReviews.data)
             if(customReviewData.length === 0){setCustomReviewData(getReviews.data)}
         }
@@ -117,7 +115,6 @@ function Reviews() {
     //Functies voor het veranderen van pagina met de next en prev button.
     const handleNextbtn = () => {
         setCurrentPage(currentPage + 1);
-
         if (currentPage + 1 > maxPageNumberLimit) {
             setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
             setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit);
@@ -125,7 +122,6 @@ function Reviews() {
     };
     const handlePrevbtn = () => {
         setCurrentPage(currentPage - 1);
-
         if ((currentPage - 1) % pageNumberLimit == 0) {
             setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
             setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
@@ -140,7 +136,8 @@ function Reviews() {
                     setQuery={updateInput}
                     placeholder="Search by venue, event or user"
                 />
-                <button onClick={()=>showOnlyEventReviews()}> Filter venue reviews</button>
+                <button onClick={()=>showOnlyEventReviews()}> Filter Event reviews</button>
+                <button onClick={()=>showOnlyVenueReviews()}> Filter Venue reviews</button>
             </section>
             <ul className={styles["pageNumbers"]}>
                 <li id={styles["button-prev"]}>
@@ -162,11 +159,8 @@ function Reviews() {
                 </li>
             </ul>
             {renderReviews(currentReviews)}
-
         </div>
     )
-
-
 }
 
 export default Reviews;

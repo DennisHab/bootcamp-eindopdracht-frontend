@@ -1,4 +1,3 @@
-import react from "react";
 import styles from "./ReviewCard.module.css";
 import React from "react";
 

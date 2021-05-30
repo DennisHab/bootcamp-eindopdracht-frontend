@@ -13,7 +13,6 @@ import RemoveVenueButton from "./RemoveVenueButton";
 function VenueCard({ name, city, events, id, image, facebook, website, instagram, rating}){
     const {user} = useContext(AuthContext);
     const [addEvent, toggleAddEvent] = useState(false);
-
     const today= new Date();
     const date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
     //Methode die eerst alle datums(als string opgeslagen) sorteert op datum en vervolgens de datums in het verleden filtert, zodat deze
@@ -33,8 +32,6 @@ function VenueCard({ name, city, events, id, image, facebook, website, instagram
         )
         return userVenue
     }
-
-
     function setBackground(rating){
         if (rating >= 10){
             return "darkgreen"
@@ -57,10 +54,8 @@ function VenueCard({ name, city, events, id, image, facebook, website, instagram
     }
 return(
         <div className={styles.container}>
-            {image ? <img className={styles["venue-image"]} src={image} /> :
-                <img className={styles["venue-image"]} src={NoImage} />
-            }
-
+                {image && !addEvent && <img className={styles["venue-image"]} src={image} alt="" />}
+                {!image && !addEvent && <img className={styles["venue-image"]} src={NoImage} alt="" />}
             <div className={styles["venue-card"]}>
                 <header className={styles["venue-header"]}>
                     <h1>{name} in {city}</h1>
@@ -68,21 +63,20 @@ return(
                     <div id={styles["venue-rating"]} style={{backgroundColor: `${setBackground(rating)}`}}>
                          <h2>{rating}</h2>
                     </div>}
-
                 </header>
                 <section className={styles["venue-information"]}>
                     <div id={styles["social-media"]}>
                     {instagram &&
                     <a href={instagram}>
-                        <img src={Instagram} width="30px" height="30px"/>
+                        <img src={Instagram} width="30px" height="30px" alt=""/>
                     </a>}
                     {facebook &&
                     <a href={facebook}>
-                        <img src={Facebook} width="30px" height="30px"/>
+                        <img src={Facebook} width="30px" height="30px" alt=""/>
                     </a>}
                     {website &&
                     <a href={website}>
-                        <img src={Website} width="30px" height="30px"/>
+                        <img src={Website} width="30px" height="30px" alt=""/>
                     </a>}
                     </div>
                     <p>Upcoming events:</p>
@@ -111,7 +105,6 @@ return(
                         }</>
                     }</>: <p>No events have been added to this venue yet.</p>} <div className={styles["bottom-navigation"]}>
                     {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue(id) &&
-
                         <RemoveVenueButton
                             venueId={id}
                         />}
@@ -134,5 +127,4 @@ return(
         </div>
 )
 }
-
 export default VenueCard;

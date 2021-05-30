@@ -1,15 +1,10 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import styles from './Events.module.css';
 import EventCard from "../components/EventCard";
-import NoImage from "../assets/no-image-found-360x250.png"
-import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
 
-
-
 function Events() {
-    const [eventData, setEventData] = useState([]);
     const [customEventData, setCustomEventData] = useState([]);
     const [defaultEventData, setDefaultEventData] = useState([]);
     const [input, setInput]= useState("");
@@ -25,10 +20,8 @@ function Events() {
     async function getEvents() {
         try{
             const getEvents = await axios.get('http://localhost:8080/events')
-            setEventData(getEvents.data)
             setDefaultEventData(getEvents.data)
             if(customEventData.length === 0){setCustomEventData(getEvents.data)}
-
         }
         catch(e){
             console.error(e)
@@ -104,6 +97,7 @@ function Events() {
                     type={event.type}
                     rating={event.rating}
                     ticketRequired={event.ticketRequired}
+                    venueCity={event.venue.address.city}
                 />
             </li>
             )})}
@@ -168,22 +162,21 @@ function Events() {
                         return  new Date(evente.date.split('-').reverse()) > new Date(date.split('-').reverse())
                     })) & toggleFilterEvents(!filterEvents)}> Show upcoming events </button> :
                     <button onClick={()=> setCustomEventData(defaultEventData) & toggleFilterEvents(!filterEvents)}> Show all events </button>}
-
                 <button onClick={()=>sortEventsByVenue()}> Sort by venue</button>
                 </div>
                 <div className={styles["event-navigation-searchbar"]}>
-                <SearchBar
-                    query={input}
-                    setQuery={updateInput}
-                    placeholder="Search by city, venuename or eventname"
-                />
+                    <SearchBar
+                        query={input}
+                        setQuery={updateInput}
+                        placeholder="Search by city, venuename or eventname"
+                    />
                 </div>
             </section>
             <ul className={styles["pageNumbers"]}>
                 <li id={styles["button-prev"]}>
                     <button
                         onClick={handlePrevbtn}
-                        disabled={currentPage == pages[0] ? true : false}
+                        disabled={currentPage === pages[0] ? true : false}
                     >
                         Prev
                     </button>
@@ -192,14 +185,13 @@ function Events() {
                 <li id={styles["button-next"]}>
                     <button
                         onClick={handleNextbtn}
-                        disabled={currentPage == pages[pages.length - 1] ? true : false}
+                        disabled={currentPage === pages[pages.length - 1] ? true : false}
                     >
                         Next
                     </button>
                 </li>
             </ul>
             {renderEvents(currentEvents)}
-
         </div>
     )
 }

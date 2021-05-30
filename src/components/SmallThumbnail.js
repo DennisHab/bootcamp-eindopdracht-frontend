@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import styles from './SmallThumbnail.module.css';
 
 function SmallThumbnail({image,text,link, popupText}) {
@@ -8,7 +8,7 @@ return (
         <div className={styles["flip-container"]}>
             <div className={styles.flipper}>
                 <div className={styles.front}>
-                    <img src={image} width = "400px" height="400px" alt="Image"/>
+                    <img src={image} width = "400px" height="400px" alt=""/>
                     <section className={styles["text-area-front"]}>
                         <p>{text}</p>
                     </section>

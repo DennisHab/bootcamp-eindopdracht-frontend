@@ -9,15 +9,23 @@ function PasswordChange(){
     const [backendError, setBackendError] = useState("");
     const {user} = useContext(AuthContext);
     const [succes, toggleSucces] = useState(false);
+    const Token = localStorage.getItem('jwt');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+    }
 
     async function onSubmit(data){
         try{
-            const updatePassword = await axios.put(`http://localhost:8080/users/${user.username}/changepassword`, {
+            const updatePassword = await axios.put(`http://localhost:8080/changepassword/${user.username}`, {
                 passwordValidation: data.passwordValidation,
                 password: data.password,
                 repeatedPassword: data.repeatedPassword
+            }, {
+                headers:headers
             })
             toggleSucces(true);
+            setTimeout(()=>window.location.reload(false), 2000)
         }
         catch (e){
             console.error(e)

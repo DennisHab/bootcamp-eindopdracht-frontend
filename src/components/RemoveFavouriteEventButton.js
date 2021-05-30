@@ -5,9 +5,16 @@ import axios from "axios";
 
 function RemoveFavouriteEventButton({eventId}){
     const {user} = useContext(AuthContext);
+    const Token = localStorage.getItem('jwt');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+    }
     async function addFavourite(){
         try{
-            const addFavourite = await axios.delete(`http://localhost:8080/usersNormal/${user.username}/${eventId}`)
+            const addFavourite = await axios.delete(`http://localhost:8080/userNormal/${user.username}/${eventId}`,{
+                headers:headers
+            })
             console.log(addFavourite)
             window.location.reload(false)
         }

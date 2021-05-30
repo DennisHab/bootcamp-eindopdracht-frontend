@@ -79,8 +79,8 @@ function SingleEvent() {
                          eventId={eventData.id}
                      />}
                         <div className={styles["event-image"]}>
-                            {eventData.image !== null && <img src={eventData.image}/>}
-                            {eventData.image === null && <img src={NoImage}/> }
+                            {eventData.image !== null && <img src={eventData.image} alt=""/>}
+                            {eventData.image === null && <img src={NoImage} alt=""/> }
                         </div>
                      <section className={styles["event-content"]}>
                          <div className={styles["event-description"]}>

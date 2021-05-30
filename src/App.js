@@ -13,10 +13,8 @@ import Reviews from "./pages/Reviews";
 import SingleVenue from "./pages/SingleVenue";
 import SingleEvent from "./pages/SingleEvent";
 import PrivateRoute from "./components/PrivateRoute";
-import {AuthContext} from "./context/AuthContext";
 
 function App() {
-  const {user} = useContext(AuthContext)
   return (
         <>
           <TopMenu/>

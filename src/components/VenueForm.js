@@ -6,28 +6,34 @@ import axios from "axios";
 function VenueForm({username}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [fileDisabled, toggleFileDisabled] = useState(false);
-    const [imageDisabled, toggleImageDisabled] = useState(false);
+    const [toggleImageDisabled] = useState(false);
     const [backendError, setBackendError] = useState([]);
     const [image, setImage] = useState("");
-
+    const Token = localStorage.getItem('jwt');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Token}`
+    }
     async function onSubmit(data){
-        try{const addVenue = await axios.post(`http://localhost:8080/usersOwner/${username}/venues`, {
+        try{const addVenue = await axios.post(`http://localhost:8080/userOwner/${username}/venues`, {
             venueName: data.venueName,
             capacity: data.capacity,
             image: image || data.image,
             facebook: data.facebook,
             instagram: data.instagram,
-            website: data.website
+            website: data.website,
+            address: {
+                streetName: data.streetName,
+                houseNumber: data.houseNumber,
+                postalCode: data.postalCode,
+                city: data.city,
+                country: data.country
+            }
 
+        },{
+            headers : headers
         })
-        const getVenueId = await axios.get(`http://localhost:8080/usersOwner/${username}/venues/id`)
-        const addAddressToVenue = await axios.post(`http://localhost:8080/usersOwner/${username}/venues/${getVenueId.data}/address`, {
-            streetName: data.streetName,
-            houseNumber: data.houseNumber,
-            postalCode: data.postalCode,
-            city: data.city,
-            country: data.country
-        })
+
             window.location.reload(false);
         }
         catch (e){
@@ -91,7 +97,7 @@ function VenueForm({username}) {
             <input
                 name="houseNumber"
                 id="venue-house-nr"
-                type="text"
+                type="int"
                 {...register("houseNumber", {required: "This field is required",
                     maxLength:{value: 4}, message: "Housenr must be up to 4 characters long"})}
             />
@@ -170,7 +176,6 @@ function VenueForm({username}) {
                     type="file"
                     accept=".png,.jpg,.jpeg"
                     onChange={(event => uploadImage(event))}
-                    onInput={toggleImageDisabled}
                 />
             </label>
             <label htmlFor="image-url">
@@ -180,7 +185,6 @@ function VenueForm({username}) {
                     name="image"
                     id="image-url"
                     type="text"
-                    onInput={toggleFileDisabled}
                     {...register("image")}
                 />
             </label>
@@ -190,5 +194,4 @@ function VenueForm({username}) {
     </form>
     )
 }
-
 export default VenueForm;

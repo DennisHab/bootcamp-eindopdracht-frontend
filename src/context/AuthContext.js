@@ -1,5 +1,5 @@
 import React, {createContext, useState, useEffect} from 'react';
-import {useHistory, Redirect} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ function AuthContextProvider({children}){
         const decoded = jwt_decode(jwtToken)
         const userId = decoded.sub;
         try {
-            const result = await axios.get(`http://localhost:8080/users/${userId}`, {
+            const result = await axios.get(`http://localhost:8080/user/${userId}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${jwtToken}`,
@@ -76,7 +76,6 @@ function AuthContextProvider({children}){
             {authState.status === 'done' ? children
                 : <p>Loading...</p>
             }
-
         </AuthContext.Provider>
     )
 }

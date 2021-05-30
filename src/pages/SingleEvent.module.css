@@ -34,10 +34,15 @@
     margin-top: 20px;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+}
+.event-description {
+    text-align: center;
 }
 .event-information-table {
-    width: 90%;
-    margin: 2px;
+    width: 96%;
+    padding: 10px;
+    margin-left: 10px;
     text-align: center;
     border: #8B0D32 1px solid;
     border-radius: 10px;
