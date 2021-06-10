@@ -66,7 +66,7 @@ function SingleVenue() {
                         {venueData.rating !== 0 &&<div className={styles["venue-rating"]}style={{backgroundColor: `${setBackground(venueData.rating)}`}}>{venueData.rating}</div>}
                     </header>
                     <div className={styles["venuecard-image"]}>
-                        {venueData.image !== null && <img src={venueData.image} alt=""/>}
+                        {venueData.image !== null && <img src={process.env.PUBLIC_URL + '/' + venueData.image} alt=""/>}
                         {venueData.image === null && <img src={NoImage} alt=""/> }
                     </div>
                     <div className={styles["venuecard-content"]}>

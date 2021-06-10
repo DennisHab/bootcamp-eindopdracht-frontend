@@ -13,6 +13,7 @@ import Reviews from "./pages/Reviews";
 import SingleVenue from "./pages/SingleVenue";
 import SingleEvent from "./pages/SingleEvent";
 import PrivateRoute from "./components/PrivateRoute";
+import LoadingAnimation from "./components/LoadingAnimation";
 
 function App() {
   return (

@@ -3,16 +3,17 @@ import {useHistory} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import styles from "./Register.module.css";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 function Register() {
     const history = useHistory()
     const [succes, toggleSucces] = useState(false);
     const [userType, setUserType] = useState(null);
     const [backendError, setBackendError] = useState([]);
-    const [addVenue, setAddVenue] = useState(false);
     const [className, setClassName] = useState(`${styles["register-form"]}`);
     const [formClassName, setFormClassName] = useState(`${styles["fieldsetafter"]}`)
     const [userOwner, setUserOwner] = useState(false);
+    const [succesText, toggleSuccesText] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     async function onSubmit(data)    {
@@ -26,12 +27,9 @@ function Register() {
                 emailAddress: data.emailAddress,
                 repeatedPassword: data.repeatedPassword
             })
-            const addAuthorities = await axios.post(`http://localhost:8080/authorities/${data.username}`, {
-                username: data.username,
-                authority: `ROLE_${userType.toUpperCase()}`
-            })
             toggleSucces(true);
-            setTimeout(()=> {history.push("/login")}, 3000)
+            setTimeout(()=> {toggleSuccesText(true)}, 2000)
+            setTimeout(()=> {history.push("/login")}, 4000)
         } catch(e) {
             setBackendError([e.response.data.message]);
             console.error(e);
@@ -63,12 +61,12 @@ function Register() {
             >
             {userType &&
                 <fieldset className={className}>
-                    <button
+                    {/*<button
                         onClick={()=>setUserType(null) & setUserOwner(false) & setFormClassName(`${styles.fieldsetafter}`)}
                         onKeyUp={null}
                     >
                         Back
-                    </button>
+                    </button>*/}
                     <h2> Please fill in your details here </h2>
                     <label htmlFor="username">
                         Username
@@ -135,15 +133,14 @@ function Register() {
                                 maxLength: {value:15}, message:"Password must be between 8 and 15 characters long"})}
                         />
                     </label>
-                    {/*Als er gekozen is voor een eigenaaraccount wordt er hieronder een extra button toegevoegd waarmee
-                     men een horecalocatie kan toevoegen. Een extra fieldset voor het invullen van de gegevens
-                     verschijnt naast de bestaande fieldset na een klik op de button. Mocht de gebruiker zich bedenken
-                     dan kan hij alsnog ervoor kiezen om het later te doen dmv de 'add later' button.*/}
                     <button type="submit">
                     Register and continue to website
                     </button>
                     {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
-                    {succes && <div className={styles.succes}>You have succesfully registered. Redirecting to login page....</div> }
+                    {succes && <div className={styles.succes}>
+                        {!succesText && <LoadingAnimation />}
+                        {succesText && <p>You have succesfully registered. Redirecting to login page....</p>}
+                    </div> }
                 </fieldset>
             }
             </form>

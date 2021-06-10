@@ -8,11 +8,12 @@ import Website from "../assets/website.png";
 import EventForm from "./EventForm";
 import {AuthContext} from "../context/AuthContext";
 import RemoveVenueButton from "./RemoveVenueButton";
-
+import AddImageToVenueForm from "./AddImageToVenueForm";
 
 function VenueCard({ name, city, events, id, image, facebook, website, instagram, rating}){
     const {user} = useContext(AuthContext);
     const [addEvent, toggleAddEvent] = useState(false);
+    const [addImage, toggleAddImage] = useState(false);
     const today= new Date();
     const date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
     //Methode die eerst alle datums(als string opgeslagen) sorteert op datum en vervolgens de datums in het verleden filtert, zodat deze
@@ -54,7 +55,7 @@ function VenueCard({ name, city, events, id, image, facebook, website, instagram
     }
 return(
         <div className={styles.container}>
-                {image && !addEvent && <img className={styles["venue-image"]} src={image} alt="" />}
+                {image && !addEvent && <img className={styles["venue-image"]} src={process.env.PUBLIC_URL + '/' + image} height="200px" width="250px" alt="" />}
                 {!image && !addEvent && <img className={styles["venue-image"]} src={NoImage} alt="" />}
             <div className={styles["venue-card"]}>
                 <header className={styles["venue-header"]}>
@@ -103,21 +104,39 @@ return(
                             </>)
                         })
                         }</>
-                    }</>: <p>No events have been added to this venue yet.</p>} <div className={styles["bottom-navigation"]}>
+                    }</>: <p>No events have been added to this venue yet.</p>}
                     {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue(id) &&
+                    <div className={styles["bottom-navigation"]}>
                         <RemoveVenueButton
                             venueId={id}
-                        />}
+                        />
                         {!addEvent && user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
                             <button onClick={() => toggleAddEvent(true)}> Add event
                         to {name}</button>}
                         {addEvent && user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
                             <button onClick={() => toggleAddEvent(false)}> Add later</button>}
-                </div>
+                        {!image && !addImage && user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
+                        <button onClick={() => toggleAddImage(true)}> Add Image to {name}</button>}
+                        {!addImage && user && user.authorities[0].authority === "ROLE_USERSOWNER" && image !== null &&
+                        <button onClick={()=> toggleAddImage(true)}>Change image of {name}</button>
+                        }
+                        {addImage && user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
+                        <button onClick={() => toggleAddImage(false)}> Add later</button>}
+                    </div>
+                    }
                     {addEvent &&
-                    <EventForm
-                        venueId={id}
-                    />
+                        <div className={styles["popup-form"]}>
+                            <EventForm
+                                venueId={id}
+                            />
+                        </div>
+                    }
+                    {addImage &&
+                        <div className={styles["popup-form"]}>
+                            <AddImageToVenueForm
+                                venueId={id}
+                            />
+                        </div>
                     }
                 </section>
                 <Link className={styles["venue-link"]} to={`/venues/${id}`}>

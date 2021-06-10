@@ -1,33 +1,41 @@
 .container {
-    border: #8B0D32 2px solid;
+    border: #8B0D32 1px solid;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    width: 100%;
     align-content: center;
+    justify-content: center;
     align-items: center;
+    background-color: #E6E6E6;
+}
+.container form {
+    width: 90%;
 }
 .review-content p {
     font-style: italic;
-
 }
 .review-content {
+    position: relative;
     border: none;
-    width: 100%;
     align-items: center;
-   text-align: center;
+    text-align: center;
 }
 .review-content-textbox {
-    width: 80%;
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+    justify-self: center;
     text-align: center;
     border-radius: 10px;
-    height: 100px;
-    border: 2px solid #8B0D32;
+    height: 150px;
+   /* border: 2px solid #8B0D32;*/
 }
 .slider-container label{
     font-size: 25px;
     display: flex;
     flex-direction: row;
-    width: 500px;
+    /*width: 500px;*/
     justify-content: center;
     align-content: center;
 }
@@ -40,7 +48,6 @@
 .slider-container p {
     margin: 4px;
 }
-
 #button-right {
     color: green;
 }
@@ -48,5 +55,10 @@
     color: red;
 }
 .succes {
+    position: absolute;
+    top: 0;
+    bottom: 200px;
+    left: 0;
+    right: 0;
     color: green;
 }

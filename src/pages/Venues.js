@@ -8,6 +8,8 @@ function Venues() {
     const [customVenueData, setCustomVenueData] = useState([]);
     const [defaultVenueData, setDefaultVenueData] = useState([]);
     const [input, setInput] = useState("");
+    const [inputData, setInputData] = useState([]);
+    const [sortedBy, setSortedBy] = useState("")
     const [venuesPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageNumberLimit] = useState(5);
@@ -18,19 +20,23 @@ function Venues() {
         try{
             const getVenues = await axios.get('http://localhost:8080/venues')
             setDefaultVenueData(getVenues.data)
-            if(customVenueData.length === 0){setCustomVenueData(getVenues.data)}
+            setInputData(getVenues.data)
+            if(customVenueData.length === 0 && !input){setCustomVenueData(getVenues.data)}
         }
         catch(e){
             console.error(e)
         }
     }
     useEffect(()=> {
-        if(!input){getVenues()
-        renderVenues(currentVenues)}
+        getVenues()
+        if(input && sortedBy !== ""){updateInput(input)}
+        renderVenues(customVenueData)
+        setSortedBy("")
     }, [customVenueData])
 
     //Functie die alle venues sorteert op naam en vervolgens het resultaat in customvenuedata zet
     async function sortVenuesByName(){
+        setSortedBy("name")
         const sortedByName = defaultVenueData.sort((a,b)=>{
             const  nameA = a.venueName.toUpperCase();
             const nameB = b.venueName.toUpperCase();
@@ -39,9 +45,11 @@ function Venues() {
             return 0
         })
         setCustomVenueData(sortedByName)
+        if(input){setInputData(sortedByName)}
     }
     //Functie die alle venues sorteert op stad en vervolgens het resultaat in customvenuedata zet
     async function sortVenuesByCity(){
+        setSortedBy("city")
         const sortedByCity = defaultVenueData.sort((a,b)=>{
             const  cityA = a.address.city.toUpperCase();
             const cityB = b.address.city.toUpperCase();
@@ -50,10 +58,11 @@ function Venues() {
             return 0
         })
         setCustomVenueData(sortedByCity)
+        if(input){setInputData(sortedByCity)}
     }
     //Functie die de venueData filtert op basis van de input in de zoekbalk. Resultaten worden direct getoond. Huidige pagina wordt aangepast naar 1.
     async function updateInput(input){
-        const filtered = defaultVenueData.filter((venue)=>{
+        const filtered = inputData.filter((venue)=>{
             return venue.venueName.toLowerCase().includes(input.toLowerCase()) || venue.address.city.toLowerCase().includes(input.toLowerCase())
         })
         setInput(input)

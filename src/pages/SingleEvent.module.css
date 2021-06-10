@@ -4,15 +4,15 @@
     justify-content: center;
     align-items: center;
 }
-.event-image img {
+.event-information img {
     width: 200px;
     height: 150px;
-    border: #E6E6E6 4px solid;
-    margin-right: 10px;
+    border: #E6E6E6 2px solid;
+    /*margin-right: 10px;*/
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     border-radius: 10px;
 }
-.event-image {
+.event-information {
     display: flex;
     justify-content: center;
     margin-top: 10px;
@@ -25,7 +25,8 @@
     border-radius: 10px 10px 0 0;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     color: #E6E6E6;
-    padding: 10px;
+    padding: 10px 0;
+    margin-bottom: 10px;
 }
 .event-header a {
     color: #E6E6E6;
@@ -40,11 +41,11 @@
     text-align: center;
 }
 .event-information-table {
-    width: 96%;
-    padding: 10px;
-    margin-left: 10px;
+    margin: 5px;
+    width: 50%;
     text-align: center;
-    border: #8B0D32 1px solid;
+    margin-left: 20px;
+    /*border: #8B0D32 1px solid;*/
     border-radius: 10px;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
 }
@@ -86,27 +87,28 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
     justify-items: center;
+    align-items: center;
     text-align: center;
     border: none;
     color: #8B0D32;
-    width: 96%;
-    margin: 10px;
-    padding: 10px;
 }
 .event-reviews h2 {
     background-color: #8B0D32;
+    font-size: medium;
     color: #E6E6E6;
+    width: 20%;
+    padding: 5px 0;
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    width: 100%;
     border-radius: 10px;
 }
 .scrollable-reviews {
     overflow: scroll;
     overflow-x: hidden;
-    height: 300px;
-    padding: 10px;
+    height: 30vh;
+    width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
     scrollbar-arrow-color: #8B0D32;
@@ -115,18 +117,48 @@
 .venue-card ,.venue-reviews p {
     font-weight: bold;
 }
-.single-review {
-    border: #8B0D32 2px solid;
-    margin:10px;
-    border-radius: 10px;
-    text-align: start;
-    padding: 10px;
+.review-form-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
 }
 
+.review-form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 50%;
+}
 .venuecard-image {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+#back-button{
+
+}
+#register-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 20px;
+    width: 50%;
+    height: 10%;
+    justify-self: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+#add-review-button {
+    font-size: 20px;
+    width: 20%;
+    border-radius: 5px;
+    height: 3vh;
+    margin-bottom: 10px;
 }

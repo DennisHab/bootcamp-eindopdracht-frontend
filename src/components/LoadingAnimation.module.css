@@ -1,0 +1,140 @@
+:root {
+    --margin-left: 30px;
+    --width: 15px;
+}
+
+.container {
+    display: flex;
+    height: fit-content;
+    justify-content: center;
+}
+
+.animation-container {
+    border-radius: 25%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+@keyframes change-first {
+    from {height: 100px;}
+    to {height: 150px;}
+    from {background-color: #8B0D32;}
+    to {background-color: #E6E6E6;}
+
+}
+@keyframes change-second {
+    from {height: 130px;}
+    to {height: 180px;}
+    from {background-color: #8B0D32;}
+    to {background-color: #E6E6E6;}
+}
+@keyframes change-third {
+    from {height: 180px;}
+    to {height: 240px;}
+    from {background-color: #8B0D32;}
+    to {background-color: #E6E6E6;}
+}
+@keyframes change-fourth {
+    from {height: 110px;}
+    to {height: 140px;}
+    from {background-color: #8B0D32;}
+    to {background-color: #E6E6E6;}
+}
+@keyframes change-fifth {
+    from {height: 100px;}
+    to {height: 130px;}
+    from {background-color: #8B0D32;}
+    to {background-color: #E6E6E6;}
+}
+@keyframes change-sixth {
+    from {height: 50px;}
+    to {height: 70px;}
+    from {background-color: #8B0D32;}
+    to {background-color: #E6E6E6;}
+}
+
+.first-line {
+    background-color: #8B0D32;
+    border: 1px solid #8B0D32;
+    width: var(--width);
+    height: 100px;
+    align-self: center;
+    border-radius: 15px;
+    animation-name: change-first;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+.second-line {
+    background-color: #8B0D32;
+    border: 1px solid #8B0D32;
+    width: var(--width);
+    height: 130px;
+    margin-left: var(--margin-left);
+    align-self: center;
+    border-radius: 10px;
+    animation-name: change-second;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-delay: 100ms;
+    animation-direction: alternate;
+}
+.third-line {
+    background-color: #8B0D32;
+    border: 1px solid #8B0D32;
+    width: var(--width);
+    height: 180px;
+    margin-left: var(--margin-left);
+    align-self: center;
+    border-radius: 10px;
+    animation-name: change-third;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-delay: 150ms;
+    animation-direction: alternate;
+}
+.fourth-line {
+    background-color: #8B0D32;
+    border: 1px solid #8B0D32;
+    width: var(--width);
+    height: 110px;
+    margin-left: var(--margin-left);
+    align-self: center;
+    border-radius: 10px;
+    animation-name: change-fourth;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-delay: 200ms;
+    animation-direction: alternate;
+}
+.fifth-line {
+    background-color: #8B0D32;
+    border: 1px solid #8B0D32;
+    width: var(--width);
+    height: 100px;
+    margin-left: var(--margin-left);
+    align-self: center;
+    border-radius: 10px;
+    animation-name: change-fifth;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-delay: 250ms;
+    animation-direction: alternate;
+
+}
+.sixth-line {
+    background-color: #8B0D32;
+    border: 1px solid #8B0D32;
+    width: var(--width);
+    height: 50px;
+    margin-left: var(--margin-left);
+    align-self: center;
+    border-radius: 10px;
+    animation-name: change-sixth;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-delay: 300ms;
+    animation-direction: alternate;
+}

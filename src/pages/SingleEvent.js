@@ -12,6 +12,7 @@ import RemoveFavouriteEventButton from "../components/RemoveFavouriteEventButton
 
 function SingleEvent() {
     const [eventData, setEventData] = useState(null);
+    const [addReview, toggleAddReview] = useState(false);
     let {id} = useParams();
     const {user}= useContext(AuthContext)
 
@@ -70,36 +71,40 @@ function SingleEvent() {
                              {eventData.rating}
                          </div>}
                      </header>
+                     <div className={styles["event-navigation"]}>
                      {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && !isUserFavourite() &&
                      <AddFavouriteEventButton
                          eventId={eventData.id}
-                     />}
+                     />
+                     }
                      {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && isUserFavourite() &&
                      <RemoveFavouriteEventButton
                          eventId={eventData.id}
-                     />}
-                        <div className={styles["event-image"]}>
-                            {eventData.image !== null && <img src={eventData.image} alt=""/>}
+                     />
+                     }
+                     </div>
+                     <div className={styles["event-information"]}>
+                            {eventData.image !== null && <img src={process.env.PUBLIC_URL + '/' + eventData.image} alt=""/>}
                             {eventData.image === null && <img src={NoImage} alt=""/> }
-                        </div>
+                            <table className={styles["event-information-table"]}>
+                                <tr>
+                                    <th>Date:</th>
+                                    <td>{eventData.date}</td>
+                                    <th>Time:</th>
+                                    <td>{eventData.time}</td>
+                                </tr>
+                                <tr>
+                                    <th>Type:</th>
+                                    <td>{eventData.type}</td>
+                                    <th>Ticket required:</th>
+                                    <td>{eventData.ticketRequired ? <span>Yes</span> : <span>No</span>}</td>
+                                </tr>
+                            </table>
+                     </div>
                      <section className={styles["event-content"]}>
                          <div className={styles["event-description"]}>
                              <p>{eventData.eventDescription}</p>
                          </div>
-                         <table className={styles["event-information-table"]}>
-                             <tr>
-                                 <th>Date:</th>
-                                 <td>{eventData.date}</td>
-                                 <th>Time:</th>
-                                 <td>{eventData.time}</td>
-                             </tr>
-                             <tr>
-                                 <th>Type:</th>
-                                 <td>{eventData.type}</td>
-                                 <th>Ticket required:</th>
-                                 <td>{eventData.ticketRequired ? <span>Yes</span> : <span>No</span>}</td>
-                             </tr>
-                         </table>
 
                      </section>
                 <div className={styles["event-reviews"]}>
@@ -114,13 +119,23 @@ function SingleEvent() {
                                 date={review.date}
                             />
                         )})}
-                    </div>: <h3>No reviews yet! Be the first to place a review</h3>}
+                </div>
+                        :<h3>No reviews yet! Be the first to place a review</h3>}
                     {user && user.authorities[0].authority === "ROLE_USERSNORMAL" &&
-                        <AddReview
-                            type="event"
-                            id={eventData.id}
-                        />}
-                    {!user && <Link to={"/register"}><h2 className={styles["error-message"]}>Make an account to add reviews here</h2></Link>  }
+                    <button id={styles["add-review-button"]} onClick={() => toggleAddReview(true)}> Add review</button>
+                    }
+                    {addReview && user && user.authorities[0].authority === "ROLE_USERSNORMAL" &&
+                    <div className={styles["review-form-container"]}>
+                        <div className={styles["review-form"]}>
+                            <button id={styles["back-button"]} onClick={()=> toggleAddReview(false)}> X </button>
+                            <AddReview
+                                type="event"
+                                id={eventData.id}
+                            />
+                        </div>
+                    </div>
+                    }
+                    {!user && <Link id={styles["register-button"]} to={"/register"}><button>You need an account to add reviews, click here to register</button></Link>  }
                     {user && user.authorities[0].authority === "ROLE_USERSOWNER" && <h2 className={styles["error-message"]}>You can't add reviews as venue owner.</h2>}
                 </div>
             </section>

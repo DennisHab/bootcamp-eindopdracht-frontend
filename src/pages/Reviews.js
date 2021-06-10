@@ -5,9 +5,11 @@ import SearchBar from "../components/SearchBar";
 import styles from "./Reviews.module.css";
 
 function Reviews() {
-    const [customReviewData, setCustomReviewData] = useState([]);
     const [defaultReviewData, setDefaultReviewData] = useState([]);
+    const [customReviewData, setCustomReviewData] = useState([]);
     const [input, setInput] = useState("");
+    const [inputData, setInputData] = useState([]);
+    const [filteredBy, setFiltered] = useState("");
     const [reviewsPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageNumberLimit] = useState(5);
@@ -18,7 +20,8 @@ function Reviews() {
         try{
             const getReviews = await axios.get('http://localhost:8080/reviews')
             setDefaultReviewData(getReviews.data)
-            if(customReviewData.length === 0){setCustomReviewData(getReviews.data)}
+            setInputData(getReviews.data)
+            if(customReviewData.length === 0 && !input && filteredBy === "") setCustomReviewData(getReviews.data)
         }
         catch(e){
             console.error(e)
@@ -26,32 +29,40 @@ function Reviews() {
     }
     useEffect(()=> {
         getReviews()
-        renderReviews(currentReviews)
+        if(filteredBy !== "" && input){updateInput(input)}
+        renderReviews(customReviewData)
+        setFiltered("");
     }, [customReviewData])
 
     //Functie die alle reviews sorteert op datum en vervolgens het resultaat in customeventdata zet
     async function sortReviewsByDate(){
+        setFiltered("date")
         const sortedByDate = defaultReviewData.sort((a,b) => { return(
             new Date(a.date.split('-').reverse()) - new Date(b.date.split('-').reverse()))})
         setCustomReviewData(sortedByDate)
+        if(input){setInputData(sortedByDate)}
     }
     //Functie die alle reviews filtert op alleen event reviews en vervolgens het resultaat in customreviewdata zet
     async function showOnlyEventReviews(){
+        setFiltered("event")
         const filteredByEvents = defaultReviewData.filter((review)=>{
             return review.event !== null;
         })
         setCustomReviewData(filteredByEvents)
+        if(input){setInputData(filteredByEvents)}
     }
     //Functie die alle reviews filtert op alleen venue reviews en vervolgens het resultaat in customreviewdata zet
     async function showOnlyVenueReviews(){
+        setFiltered("venue")
         const filteredByVenues = defaultReviewData.filter((review)=>{
             return review.venue !== null;
         })
         setCustomReviewData(filteredByVenues)
+        if(input){setInputData(filteredByVenues)}
     }
     //Functie die de reviewData filtert op basis van de input in de zoekbalk. Resultaten worden direct getoond. Huidige pagina wordt aangepast naar 1.
     async function updateInput(input){
-        const filtered = defaultReviewData.filter((review)=>{
+        const filtered = inputData.filter((review)=>{
             if(review.event !== null){
                 return(review.event.name.toLowerCase().includes(input.toLowerCase()) ||
                 review.userNormal.username.toLowerCase().includes(input.toLowerCase()))
@@ -130,14 +141,19 @@ function Reviews() {
     return (
         <div className={styles.container}>
             <section className={styles["review-navigation"]}>
-                <button onClick={()=>sortReviewsByDate()}> Sort by date</button>
-                <SearchBar
-                    query={input}
-                    setQuery={updateInput}
-                    placeholder="Search by venue, event or user"
-                />
-                <button onClick={()=>showOnlyEventReviews()}> Filter Event reviews</button>
-                <button onClick={()=>showOnlyVenueReviews()}> Filter Venue reviews</button>
+                <div className={styles["review-navigation-buttons"]}>
+                    <button onClick={()=>sortReviewsByDate()}> Sort by date</button>
+                    <button onClick={()=>showOnlyEventReviews()}> Filter Event reviews</button>
+                    <button onClick={()=>showOnlyVenueReviews()}> Filter Venue reviews</button>
+                    <button onClick={()=>setCustomReviewData(defaultReviewData)}> Reset filters</button>
+                </div>
+                <div className={styles["review-navigation-search"]}>
+                    <SearchBar
+                        query={input}
+                        setQuery={updateInput}
+                        placeholder="Search by venue, event or user"
+                    />
+                </div>
             </section>
             <ul className={styles["pageNumbers"]}>
                 <li id={styles["button-prev"]}>

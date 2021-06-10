@@ -16,12 +16,10 @@
     width: 35%;
     height: 70px;
     border-radius: 10px;
-    /*border: solid 2px #8B0D32;*/
     margin: 20px;
     background-color: rgba(230, 230, 230, 0.8);
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
-
 .venue-navigation button {
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     border-radius: 5px;
@@ -45,7 +43,8 @@
 }
 .pageNumbers li{
     padding:10px;
-    border: 1px solid white;
+    border: 1px solid #8B0D32;
+    border-radius: 5px;
     cursor: pointer;
 }
 .pageNumbers button{

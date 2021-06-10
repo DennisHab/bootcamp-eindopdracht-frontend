@@ -1,14 +1,16 @@
 import {Link} from "react-router-dom";
 import styles from "./EventCard.module.css";
 import NoImage from "../assets/no-image-found-360x250.png";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 import AddFavouriteEventButton from "./AddFavouriteEventButton";
 import RemoveFavouriteEventButton from "./RemoveFavouriteEventButton";
 import RemoveEventButton from "./RemoveEventButton";
+import AddImageToEventForm from "./AddImageToEventForm";
 
 function EventCard({image, name, venue, venueCity, id, venueId, date, time, type, description, rating, ticketRequired}){
     const {user} = useContext(AuthContext);
+    const [addImage, toggleAddImage] = useState(false);
 
     function isUserVenue() {
         let userVenue = false
@@ -40,8 +42,6 @@ function EventCard({image, name, venue, venueCity, id, venueId, date, time, type
             return "darkred"
         }
     }
-
-
     function isUserFavourite(){
         let UserFavourite = false
         user.favouredEvents.map((evente)=>{
@@ -79,19 +79,36 @@ function EventCard({image, name, venue, venueCity, id, venueId, date, time, type
                             <td>{ticketRequired ? <span>Yes</span> : <span>No</span>}</td>
                         </tr>
                     </table>
-                    {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && !isUserFavourite() &&
-                        <AddFavouriteEventButton
-                            eventId={id}
-                        />}
-                    {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && isUserFavourite() &&
-                        <RemoveFavouriteEventButton
-                            eventId={id}
-                        />}
-                    {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue() &&
-                        <RemoveEventButton
-                            venueId={venueId}
-                            eventId={id}
-                        />
+                    <div className={styles["user-bottom-navigation"]}>
+                        {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && !isUserFavourite() &&
+                            <AddFavouriteEventButton
+                                eventId={id}
+                            />}
+                        {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && isUserFavourite() &&
+                            <RemoveFavouriteEventButton
+                                eventId={id}
+                            />}
+                    </div>
+                    {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue(id) &&
+                        <div className={styles["owner-bottom-navigation"]}>
+                            {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue() &&
+                                <RemoveEventButton
+                                    venueId={venueId}
+                                    eventId={id}
+                                />
+                            }
+                            {!addImage && user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
+                            <button onClick={() => toggleAddImage(true)}> Add Image to {name}</button>
+                            }
+                            {addImage && user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
+                            <button onClick={() => toggleAddImage(false)}> Add later</button>
+                            }
+                            {addImage &&
+                                <AddImageToEventForm
+                                    eventId={id}
+                                />
+                            }
+                        </div>
                     }
                 </section>
                 <Link className={styles["event-link"]} to={`/events/${id}`}>

@@ -11,8 +11,24 @@ input[type=text], input[type=password], input[type=email], input[type=int] {
     border: none;
     border-bottom: #8B0D32 4px solid;
     background: none;
-    margin-bottom:30px;
+    margin-bottom: 10px;
     text-align: center;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+button {
+    background-color: #8B0D32;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    color: #E6E6E6;
+    border: 1px solid #E6E6E6;
+    height: auto;
+    width: max-content;
+}
+button:hover {
+    background-color: #E6E6E6;
+    text-align: center;
+    color: #8B0D32;
+    border: 1px solid #8B0D32;
 }

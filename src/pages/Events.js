@@ -8,6 +8,8 @@ function Events() {
     const [customEventData, setCustomEventData] = useState([]);
     const [defaultEventData, setDefaultEventData] = useState([]);
     const [input, setInput]= useState("");
+    const [inputData, setInputData] = useState([]);
+    const [sortedBy, setSortedBy] = useState("");
     const [eventsPerPage]= useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageNumberLimit] = useState(5);
@@ -21,7 +23,7 @@ function Events() {
         try{
             const getEvents = await axios.get('http://localhost:8080/events')
             setDefaultEventData(getEvents.data)
-            if(customEventData.length === 0){setCustomEventData(getEvents.data)}
+            if(customEventData.length === 0 && !input && sortedBy === ""){setCustomEventData(getEvents.data)}
         }
         catch(e){
             console.error(e)
@@ -29,27 +31,24 @@ function Events() {
     }
 
     useEffect(()=> {
-        if(!input && filterEvents){
-        renderEvents(currentEvents)}
-        else if(!input){getEvents()}
+        getEvents()
+        if(input && sortedBy !== ""){updateInput(input)}
+        renderEvents(customEventData)
+        setSortedBy("")
     }, [customEventData])
 
     //Functie die alle events sorteert op datum en vervolgens het resultaat in customeventdata zet
     async function sortEventsByDate(){
-        if(!input){
+        setSortedBy("date")
         const sortedByDate = defaultEventData.sort((a,b) => { return(
             new Date(a.date.split('-').reverse()) - new Date(b.date.split('-').reverse()))})
         setCustomEventData(sortedByDate)
-        }else {
-            const sortedByDate = customEventData.sort((a,b) => { return(
-                new Date(a.date.split('-').reverse()) - new Date(b.date.split('-').reverse()))})
-            setCustomEventData(sortedByDate)
-        }
+        if(input){setInputData(sortedByDate)}
 
     }
     //Functie die alle venues sorteert op venue en vervolgens het resultaat in customeventdata zet
     async function sortEventsByVenue(){
-        if(!input){
+        setSortedBy("venue")
         const sortedByVenue = defaultEventData.sort((a,b)=>{
             const  cityA = a.venue.venueName.toUpperCase();
             const cityB = b.venue.venueName.toUpperCase();
@@ -57,17 +56,9 @@ function Events() {
             if (cityA > cityB) return 1
             return 0
         })
-        setCustomEventData(sortedByVenue)}
-        else{
-            const sortedByVenue = customEventData.sort((a,b)=>{
-                const  cityA = a.venue.venueName.toUpperCase();
-                const cityB = b.venue.venueName.toUpperCase();
-                if (cityA < cityB) return -1
-                if (cityA > cityB) return 1
-                return 0
-            })
-            setCustomEventData(sortedByVenue)
-        }
+        setCustomEventData(sortedByVenue)
+        if(input){setInputData(sortedByVenue)}
+
     }
     //Functie die de eventData filtert op basis van de input in de zoekbalk. Resultaten worden direct getoond. Huidige pagina wordt aangepast naar 1.
     async function updateInput(input){

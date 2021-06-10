@@ -11,7 +11,7 @@ function TopMenu() {
         <div className={styles["header-top-menu"]}>
             <header className={styles.header}>
                 <NavLink to="/">
-                <img src={BigLogo} width="500px" height="160px" alt="logo"/>
+                <img src={BigLogo} width="400px" height="130px" alt="logo"/>
                 </NavLink>
             </header>
             {!user &&

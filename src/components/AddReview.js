@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import styles from './AddReview.module.css';
 import {AuthContext} from "../context/AuthContext";
 import axios from "axios";
+import LoadingAnimation from "./LoadingAnimation";
 
 function  AddReview({type, id}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -37,7 +38,7 @@ function  AddReview({type, id}) {
                 headers:headers
             })
             setSucces(true);
-            setTimeout(()=>window.location.reload(false), 1000)
+            setTimeout(()=>window.location.reload(false), 2000)
         }
         catch (e){
             console.error(e)
@@ -50,7 +51,6 @@ function  AddReview({type, id}) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset className={styles["review-content"]}>
                     <label htmlFor="review-content">
-                        <h2>Add review:</h2>
                         <div className={styles.error}>{errors?.reviewContent?.message} </div>
                         <textarea className={styles["review-content-textbox"]}
                             placeholder="Write your review here"
@@ -69,7 +69,7 @@ function  AddReview({type, id}) {
                     </label>
                     </div>
                     {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
-                    {succes && <div className={styles.succes}> Review submitted</div> }
+                    {succes && <div className={styles.succes}> <LoadingAnimation/> </div> }
                     <button type="submit">Add review</button>
                 </fieldset>
             </form>

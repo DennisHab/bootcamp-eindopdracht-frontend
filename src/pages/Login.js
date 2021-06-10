@@ -1,9 +1,10 @@
 import React ,{useState, useContext} from 'react';
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {set, useForm} from "react-hook-form";
 import axios from "axios";
 import styles from "./Login.module.css";
 import {AuthContext} from "../context/AuthContext";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 function Login() {
     const { login } = useContext(AuthContext);
@@ -18,7 +19,9 @@ function Login() {
                 username: data.username,
                 password: data.password
             })
-            login(postData.data.jwt);
+            toggleSucces(true);
+            setTimeout(()=> login(postData.data.jwt), 2000)
+            /*login(postData.data.jwt);*/
         }
         catch(e) {
             setBackEndError([e.response.data.message]);
@@ -56,6 +59,8 @@ function Login() {
                 >
                     Login
                 </button>
+                Dont have a account? Register <Link to={"/register"}><b> here </b></Link>
+                {succes && <div className={styles.succes}><LoadingAnimation/></div> }
             </fieldset>
 
     </form>

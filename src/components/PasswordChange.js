@@ -28,6 +28,7 @@ function PasswordChange(){
             setTimeout(()=>window.location.reload(false), 2000)
         }
         catch (e){
+            console.log(e)
             console.error(e)
             setBackendError(e.response.data.message)
         }

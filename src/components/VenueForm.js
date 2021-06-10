@@ -14,11 +14,16 @@ function VenueForm({username}) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${Token}`
     }
+    const headersMultiPart = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${Token}`
+    }
     async function onSubmit(data){
-        try{const addVenue = await axios.post(`http://localhost:8080/userOwner/${username}/venues`, {
+        try{
+            const addVenue = await axios.post(`http://localhost:8080/userOwner/${username}/venues`, {
             venueName: data.venueName,
             capacity: data.capacity,
-            image: image || data.image,
+            /*image: image || data.image,*/
             facebook: data.facebook,
             instagram: data.instagram,
             website: data.website,
@@ -33,15 +38,20 @@ function VenueForm({username}) {
         },{
             headers : headers
         })
-
+            /*const getVenueId = await axios.get(`http://localhost:8080/venues/venuename/${data.venueName}`);
+            const addImageToVenue = await axios.post(`http://localhost:8080/usersOwner/${username}/venues/${getVenueId.data.id}`, {
+            file : data.file}, {
+                headers:headersMultiPart
+            })*/
             window.location.reload(false);
         }
+
         catch (e){
             setBackendError([e.response.data.message])
             console.error(e)
         }
     }
-    function uploadImage(e) {
+    /*function uploadImage(e) {
         const files = e.target.files[0];
         const formData = new FormData();
         const fileSize = files.size;
@@ -54,7 +64,7 @@ function VenueForm({username}) {
             axios.post(`https://api.cloudinary.com/v1_1/dhqkuww2g/image/upload`, formData)
                 .then(res => setImage(res.data.secure_url))
                 .catch(err => console.log(err));
-        }}
+        }}*/
     return (
     <form onSubmit={handleSubmit(onSubmit)} >
          <fieldset className={styles["venue-form"]}>
@@ -175,10 +185,11 @@ function VenueForm({username}) {
                     name="file"
                     type="file"
                     accept=".png,.jpg,.jpeg"
-                    onChange={(event => uploadImage(event))}
+                    {...register("file")}
+
                 />
             </label>
-            <label htmlFor="image-url">
+            {/*<label htmlFor="image-url">
                 Or add picture url:
             <div className={styles.error}>{errors?.image?.message} </div>
                 <input
@@ -187,7 +198,7 @@ function VenueForm({username}) {
                     type="text"
                     {...register("image")}
                 />
-            </label>
+            </label>*/}
             {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
             <button type="submit"> Add venue</button>
         </fieldset>
