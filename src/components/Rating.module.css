@@ -1,0 +1,14 @@
+.rating {
+    display: flex;
+    height: 60px;
+    width: 80px;
+    color: #E6E6E6;
+    text-shadow: 1px 1px black;
+    background-color: green;
+    border-radius: 50%;
+    font-size: 35px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}

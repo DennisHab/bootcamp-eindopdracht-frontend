@@ -11,13 +11,13 @@
 .venue-navigation {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    width: 35%;
+    width: 60%;
     height: 70px;
     border-radius: 10px;
     margin: 20px;
-    background-color: rgba(230, 230, 230, 0.8);
+    background-color: #E6E6E6;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 .venue-navigation button {
@@ -43,7 +43,7 @@
 }
 .pageNumbers li{
     padding:10px;
-    border: 1px solid #8B0D32;
+    border: 1px solid #E6E6E6;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -52,16 +52,17 @@
     height: 100%;
 }
 .active {
-    background-color: #E6E6E6;
-    color: #8B0D32;
+    background-color: #8B0D32 ;
+    color: #E6E6E6;
 }
 #button-prev, #button-next{
     border: none;
 }
 #button-prev button, #button-next button {
     width: 50px;
-    border: 1px #E6E6E6 solid;
-    border-radius: 5px;
+    background: #E6E6E6;
+    border-radius: 2px;
+    color: #8B0D32;
 }
 
 

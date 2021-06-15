@@ -2,6 +2,7 @@ import React, {createContext, useState, useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 export const AuthContext = createContext({});
 
@@ -21,7 +22,6 @@ function AuthContextProvider({children}){
                     Authorization: `Bearer ${jwtToken}`,
                 }
             })
-            console.log(result);
             setAuthState({
                 user:{
                     username: result.data.username,
@@ -74,7 +74,7 @@ function AuthContextProvider({children}){
     return (
         <AuthContext.Provider value={data}>
             {authState.status === 'done' ? children
-                : <p>Loading...</p>
+                : <LoadingAnimation/>
             }
         </AuthContext.Provider>
     )

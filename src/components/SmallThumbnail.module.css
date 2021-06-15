@@ -15,11 +15,10 @@
 }
 .front, .back {
     backface-visibility: hidden;
-    background-color: #E6E6E6;
     color: #8B0D32;
     text-align: center;
     border-radius: 36px;
-    border: #8B0D32 2px solid;
+    /*border: #E6E6E6 1px solid;*/
     font-size: 30px;
     font-weight: bold;
     position: absolute;
@@ -29,25 +28,57 @@
 .front {
     z-index: 2;
     transform: rotateY(0deg);
-    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(230, 230, 230, 0.25) 0px 50px 100px -20px, rgba(230, 230, 230, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    text-align: center;
 }
 .back {
     transform: rotateY(180deg);
+    font-family: "Leelawadee UI", sans-serif;
     padding: 10px;
-    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(230, 230, 230, 0.40) 0px 50px 100px -20px, rgba(230, 230, 230, 0.6) 0px 30px 60px -30px;
+    /*border: 1px solid #E6E6E6;*/
+    background: rgb(238,235,235);
+    background: linear-gradient(180deg, rgba(238,235,235,1) 0%, rgba(227,227,227,1) 12%, rgba(184,134,134,1) 88%);
+
+    color: #8B0D32;
+    position: relative;
 }
-.front img {
-    border-radius: 34px 34px 0 0;
+.back p {
+    font-size: 40px;
+}
+.back-image {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    left: 100px;
+    top: 350px;
 }
 .text-area-front {
-    height: 100px;
+    color: #E6E6E6;
+    border-radius: 10px;
+    /*border: 1px solid #E6E6E6;*/
+    /*background-color: rgba(230, 230, 230, 0.7);*/
     display: flex;
+    height: fit-content;
+    width: 80%;
+    font-size: 40px;
     justify-content: center;
+    text-align: center;
+    position: absolute;
     align-content: center;
+    bottom: 18px;
+    left: 40px;
+}
+.front-image {
+    position: relative;
+    height: 100%;
+    border-radius: 35px;
 }
 .text-area-front p {
+    display: flex;
+    text-shadow: 1px 1px black;
     align-self: center;
-    margin-bottom: 50px;
+    margin: 10px;
 }
 
 

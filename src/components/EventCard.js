@@ -7,6 +7,7 @@ import AddFavouriteEventButton from "./AddFavouriteEventButton";
 import RemoveFavouriteEventButton from "./RemoveFavouriteEventButton";
 import RemoveEventButton from "./RemoveEventButton";
 import AddImageToEventForm from "./AddImageToEventForm";
+import Rating from "./Rating";
 
 function EventCard({image, name, venue, venueCity, id, venueId, date, time, type, description, rating, ticketRequired}){
     const {user} = useContext(AuthContext);
@@ -22,26 +23,6 @@ function EventCard({image, name, venue, venueCity, id, venueId, date, time, type
         )
         return userVenue
     }
-    function setBackground(rating){
-        if (rating >= 10){
-            return "darkgreen"
-        }
-        if (rating >= 8){
-            return "green"
-        }
-        if (rating >= 6){
-            return "yellow"
-        }
-        if (rating >= 4){
-            return "orange"
-        }
-        if (rating >= 2){
-            return "red"
-        }
-        if (rating >= 1){
-            return "darkred"
-        }
-    }
     function isUserFavourite(){
         let UserFavourite = false
         user.favouredEvents.map((evente)=>{
@@ -52,6 +33,7 @@ function EventCard({image, name, venue, venueCity, id, venueId, date, time, type
         return UserFavourite;
     }
     return(
+        <Link to={`events/${id}`}>
         <div className={styles.container}>
             {image && <img className={styles["event-image"]} src={image} alt=""/>}
             {!image && <img className={styles["event-image"]} src={NoImage} alt=""/> }
@@ -59,9 +41,7 @@ function EventCard({image, name, venue, venueCity, id, venueId, date, time, type
                 <header className={styles["event-header"]}>
                     <h1>{name} at {venue} in {venueCity}</h1>
                     {rating !== 0 &&
-                    <div id={styles["event-rating"]} style={{backgroundColor: `${setBackground(rating)}`}}>
-                        <h2>{rating}</h2>
-                    </div>}
+                    <Rating rating={rating}/> }
                 </header>
                 <section className={styles["event-information"]}>
                     <p>{description}</p>
@@ -111,11 +91,10 @@ function EventCard({image, name, venue, venueCity, id, venueId, date, time, type
                         </div>
                     }
                 </section>
-                <Link className={styles["event-link"]} to={`/events/${id}`}>
-                    <h2>See more</h2>
-                </Link>
+
             </div>
         </div>
+        </Link>
     )
 }
 export default EventCard;

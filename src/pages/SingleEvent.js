@@ -8,6 +8,7 @@ import {AuthContext} from "../context/AuthContext";
 import ReviewCard from "../components/ReviewCard";
 import AddFavouriteEventButton from "../components/AddFavouriteEventButton";
 import RemoveFavouriteEventButton from "../components/RemoveFavouriteEventButton";
+import Rating from "../components/Rating";
 
 
 function SingleEvent() {
@@ -39,27 +40,6 @@ function SingleEvent() {
         }getEvent()
     },[] )
 
-    function setBackground(rating){
-        if (rating >= 10){
-            return "darkgreen"
-        }
-        if (rating >= 8){
-            return "green"
-        }
-        if (rating >= 6){
-            return "yellow"
-        }
-        if (rating >= 4){
-            return "orange"
-        }
-        if (rating >= 2){
-            return "red"
-        }
-        if (rating >= 1){
-            return "darkred"
-        }
-    }
-
     return(<>
             {eventData &&
             <div className={styles.container}>
@@ -67,9 +47,9 @@ function SingleEvent() {
                      <header className={styles["event-header"]}>
                          <h1>{eventData.name} at <Link to={`/venues/${eventData.venue.id}`}>{eventData.venue.venueName}</Link></h1>
                          {eventData.rating > 0 &&
-                         <div className={styles["event-rating"]} style={{backgroundColor: `${setBackground(eventData.rating)}`}}>
-                             {eventData.rating}
-                         </div>}
+                         <Rating
+                            rating={eventData.rating}
+                         />}
                      </header>
                      <div className={styles["event-navigation"]}>
                      {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && !isUserFavourite() &&

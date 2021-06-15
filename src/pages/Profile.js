@@ -43,7 +43,7 @@ function Profile() {
                res.push(events)}
            }
         setUserEvents([].concat.apply([],res))
-        console.log(userEvents)}
+        }
         }
     //Variabelen voor het sorteren op datum.
     const today= new Date();

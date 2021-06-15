@@ -1,51 +1,44 @@
 .container {
     display: flex;
     flex-direction: row;
-    background: none;
-    color: #8B0D32;
+    color: var(--text-color);
+    padding: 20px;
     align-items: center;
-    border: none;
+    background: #E6E6E6;
+    border-radius: 5px;
+    border: 1px solid #E6E6E6;
     width: 100%;
     margin: 20px 20px 0 0;
+}
+.container:hover{
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border: 1px solid #8B0D32;
 }
 .event-image {
     display: inline;
     width: 250px;
+    border: 2px solid #E6E6E6;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     height: 200px;
-    border: #E6E6E6 2px solid;
-    border-radius: 15px;
+    border-radius: 50%;
     margin-right: 10px;
 }
-
 .event-card {
     text-align: center;
     overflow: no-content;
-    margin-left: 0;
     display: block;
-    flex-flow: column;
-    width: 700px;
-    /*border: #8B0D32 2px solid;*/
-    background-color: rgba(230, 230, 230, 1);
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    padding: 0;
-    border-radius: 15px;
+    width: 100%;
 }
-
 .event-header h1{
-    color: #E6E6E6;
+    color: var(--text-color);
     margin: 3px;
     width: 100%;
 }
 .event-header {
     padding: 10px;
-    background-color: #8B0D32;
-    color: #E6E6E6;
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
-    border-radius: 10px;
+    border-bottom: #8B0D32 1px solid;
     display: flex;
     flex-direction: row;
-    border: #E6E6E6 2px solid;
     justify-content: center;
     align-items: center;
 }
@@ -53,13 +46,13 @@
     display: flex;
     height: 50px;
     width: 60px;
-    color: #E6E6E6;
+    color: black;
     background-color: green;
-    border: #E6E6E6 2px solid;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
     margin-right: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 .event-information {
     display: flex;
@@ -74,8 +67,7 @@
     width: 100%;
     margin: 2px;
     text-align: center;
-    border-bottom: #8B0D32 1px solid;
-    border-top: #8B0D32 1px solid;
+    border: #8B0D32 1px solid;
     border-radius: 10px;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
 }
@@ -85,19 +77,4 @@
 }
 .event-table tr {
     margin: 5px;
-}
-
-.event-link{
-    display: flex;
-    justify-content: center;
-    height: auto;
-    background-color: #8B0D32;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    color: #E6E6E6;
-    border-radius:  0 0 10px 10px;
-    border: #E6E6E6 2px solid;
-    border-top: none;
-}
-.event-link h2{
-    font-size: medium;
 }

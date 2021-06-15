@@ -5,10 +5,12 @@ import NoImage from "../assets/no-image-found-360x250.png";
 import Facebook from "../assets/facebook.png";
 import Instagram from "../assets/Instagram (2).png";
 import Website from "../assets/website.png";
+import Location from "../assets/location-icon.png";
 import EventForm from "./EventForm";
 import {AuthContext} from "../context/AuthContext";
 import RemoveVenueButton from "./RemoveVenueButton";
 import AddImageToVenueForm from "./AddImageToVenueForm";
+import Rating from "./Rating";
 
 function VenueCard({ name, city, events, id, image, facebook, website, instagram, rating}){
     const {user} = useContext(AuthContext);
@@ -33,53 +35,38 @@ function VenueCard({ name, city, events, id, image, facebook, website, instagram
         )
         return userVenue
     }
-    function setBackground(rating){
-        if (rating >= 10){
-            return "darkgreen"
-        }
-        if (rating >= 8){
-            return "green"
-        }
-        if (rating >= 6){
-            return "yellow"
-        }
-        if (rating >= 4){
-            return "orange"
-        }
-        if (rating >= 2){
-            return "red"
-        }
-        if (rating >= 1){
-            return "darkred"
-        }
-    }
 return(
+        <Link to={`venues/${id}`}>
         <div className={styles.container}>
-                {image && !addEvent && <img className={styles["venue-image"]} src={process.env.PUBLIC_URL + '/' + image} height="200px" width="250px" alt="" />}
+                {image && !addEvent && <img className={styles["venue-image"]} src={process.env.PUBLIC_URL + '/' + image} alt="" />}
                 {!image && !addEvent && <img className={styles["venue-image"]} src={NoImage} alt="" />}
             <div className={styles["venue-card"]}>
+                <div className={styles["header-container"]}>
                 <header className={styles["venue-header"]}>
-                    <h1>{name} in {city}</h1>
-                    {rating !== 0 &&
-                    <div id={styles["venue-rating"]} style={{backgroundColor: `${setBackground(rating)}`}}>
-                         <h2>{rating}</h2>
-                    </div>}
-                </header>
-                <section className={styles["venue-information"]}>
                     <div id={styles["social-media"]}>
-                    {instagram &&
-                    <a href={instagram}>
-                        <img src={Instagram} width="30px" height="30px" alt=""/>
-                    </a>}
-                    {facebook &&
-                    <a href={facebook}>
-                        <img src={Facebook} width="30px" height="30px" alt=""/>
-                    </a>}
-                    {website &&
-                    <a href={website}>
-                        <img src={Website} width="30px" height="30px" alt=""/>
-                    </a>}
+                        {instagram &&
+                        <a href={instagram}>
+                            <img src={Instagram} width="30px" height="30px" alt=""/>
+                        </a>}
+                        {facebook &&
+                        <a href={facebook}>
+                            <img src={Facebook} width="30px" height="30px" alt=""/>
+                        </a>}
+                        {website &&
+                        <a href={website}>
+                            <img src={Website} width="30px" height="30px" alt=""/>
+                        </a>}
                     </div>
+                    <h1>{name}</h1>
+                    {rating !== 0 &&
+                    <Rating rating={rating} />}
+                </header>
+                    <div className={styles.location}>
+                        <img src={Location} alt="" width="25px" height="30px"/>{city}
+                    </div>
+                </div>
+
+                <section className={styles["venue-information"]}>
                     <p>Upcoming events:</p>
                     {eventsFiltered.length > 0 ? <>
                     <table className={styles["venue-table"]}>
@@ -139,11 +126,9 @@ return(
                         </div>
                     }
                 </section>
-                <Link className={styles["venue-link"]} to={`/venues/${id}`}>
-                    <h2>See more</h2>
-                </Link>
             </div>
         </div>
+        </Link>
 )
 }
 export default VenueCard;

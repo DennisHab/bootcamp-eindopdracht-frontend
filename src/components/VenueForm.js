@@ -5,17 +5,10 @@ import axios from "axios";
 
 function VenueForm({username}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [fileDisabled, toggleFileDisabled] = useState(false);
-    const [toggleImageDisabled] = useState(false);
     const [backendError, setBackendError] = useState([]);
-    const [image, setImage] = useState("");
     const Token = localStorage.getItem('jwt');
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Token}`
-    }
-    const headersMultiPart = {
-        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${Token}`
     }
     async function onSubmit(data){
@@ -38,11 +31,6 @@ function VenueForm({username}) {
         },{
             headers : headers
         })
-            /*const getVenueId = await axios.get(`http://localhost:8080/venues/venuename/${data.venueName}`);
-            const addImageToVenue = await axios.post(`http://localhost:8080/usersOwner/${username}/venues/${getVenueId.data.id}`, {
-            file : data.file}, {
-                headers:headersMultiPart
-            })*/
             window.location.reload(false);
         }
 
@@ -51,20 +39,6 @@ function VenueForm({username}) {
             console.error(e)
         }
     }
-    /*function uploadImage(e) {
-        const files = e.target.files[0];
-        const formData = new FormData();
-        const fileSize = files.size;
-        if (fileSize >= 5000000){
-            setBackendError(["Uploaded file size exceeds 5MB"])
-        } else {
-            formData.append("upload_preset", "livelyupload");
-            formData.append("file", files);
-
-            axios.post(`https://api.cloudinary.com/v1_1/dhqkuww2g/image/upload`, formData)
-                .then(res => setImage(res.data.secure_url))
-                .catch(err => console.log(err));
-        }}*/
     return (
     <form onSubmit={handleSubmit(onSubmit)} >
          <fieldset className={styles["venue-form"]}>
@@ -176,29 +150,6 @@ function VenueForm({username}) {
                      {...register("website", {maxLength: 100, message:"Length can't exceed 100 characters"})}
                  />
             </label>
-                <h1>Images:</h1>
-            <label htmlFor="file">
-                Upload picture (maximum size= 5MB):
-            <div className={styles.error}>{errors?.file?.message} </div>
-                <input
-                    disabled={fileDisabled}
-                    name="file"
-                    type="file"
-                    accept=".png,.jpg,.jpeg"
-                    {...register("file")}
-
-                />
-            </label>
-            {/*<label htmlFor="image-url">
-                Or add picture url:
-            <div className={styles.error}>{errors?.image?.message} </div>
-                <input
-                    name="image"
-                    id="image-url"
-                    type="text"
-                    {...register("image")}
-                />
-            </label>*/}
             {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
             <button type="submit"> Add venue</button>
         </fieldset>

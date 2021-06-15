@@ -3,6 +3,8 @@ import axios from "axios";
 import styles from './Events.module.css';
 import EventCard from "../components/EventCard";
 import SearchBar from "../components/SearchBar";
+import Pagination from "../components/Pagination";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 function Events() {
     const [customEventData, setCustomEventData] = useState([]);
@@ -15,15 +17,18 @@ function Events() {
     const [pageNumberLimit] = useState(5);
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+    const [loading, toggleLoading] = useState(false);
     const [filterEvents, toggleFilterEvents] = useState(false);
     const today= new Date();
     const date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
 
     async function getEvents() {
+        toggleLoading(true);
         try{
             const getEvents = await axios.get('http://localhost:8080/events')
             setDefaultEventData(getEvents.data)
             if(customEventData.length === 0 && !input && sortedBy === ""){setCustomEventData(getEvents.data)}
+            toggleLoading(false);
         }
         catch(e){
             console.error(e)
@@ -35,6 +40,7 @@ function Events() {
         if(input && sortedBy !== ""){updateInput(input)}
         renderEvents(customEventData)
         setSortedBy("")
+
     }, [customEventData])
 
     //Functie die alle events sorteert op datum en vervolgens het resultaat in customeventdata zet
@@ -183,6 +189,7 @@ function Events() {
                 </li>
             </ul>
             {renderEvents(currentEvents)}
+            {loading && <LoadingAnimation/>}
         </div>
     )
 }

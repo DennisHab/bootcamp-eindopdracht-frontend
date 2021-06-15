@@ -9,6 +9,7 @@ import Instagram from "../assets/Instagram (2).png";
 import Facebook from "../assets/facebook.png";
 import Website from "../assets/website.png";
 import ReviewCard from "../components/ReviewCard";
+import Rating from "../components/Rating";
 
 function SingleVenue() {
     const [venueData, setVenueData] = useState(null);
@@ -34,28 +35,6 @@ function SingleVenue() {
         {venueData && venueData.events.sort((a,b) => { return(new Date(a.date.split('-').reverse()) - new Date(b.date.split('-').reverse()))  }) &&
             venueData.events.filter((evente)=>{return new Date(evente.date.split('-').reverse()) > new Date(date.split('-').reverse())})}
 
-
-    function setBackground(rating){
-        if (rating >= 10){
-            return "darkgreen"
-        }
-        if (rating >= 8){
-            return "green"
-        }
-        if (rating >= 6){
-            return "yellow"
-        }
-        if (rating >= 4){
-            return "orange"
-        }
-        if (rating >= 2){
-            return "red"
-        }
-        if (rating >= 1){
-            return "darkred"
-        }
-    }
-
     return(<>
         {venueData &&
         <div className={styles.container}>
@@ -63,7 +42,7 @@ function SingleVenue() {
                 <section className={styles["venue-card"]}>
                     <header className={styles["venue-header"]}>
                         <h1>{venueData.venueName} in {venueData.address.city}</h1>
-                        {venueData.rating !== 0 &&<div className={styles["venue-rating"]}style={{backgroundColor: `${setBackground(venueData.rating)}`}}>{venueData.rating}</div>}
+                        {venueData.rating !== 0 && <Rating rating={venueData.rating}/> }
                     </header>
                     <div className={styles["venuecard-image"]}>
                         {venueData.image !== null && <img src={process.env.PUBLIC_URL + '/' + venueData.image} alt=""/>}
