@@ -69,7 +69,7 @@ function VenueCard({
                 <div onClick={(e) => handleClick(e)} className={styles["venue-card"]}>
                     <div className={styles["header-container"]}>
                         <header className={styles["venue-header"]}>
-                            <div id={styles["social-media"]}>
+                            <div id={styles["social-media"]} onClick={(e) => e.stopPropagation()}>
                                 {instagram &&
                                 <a href={instagram}>
                                     <img src={Instagram} width="30px" height="30px" alt=""/>

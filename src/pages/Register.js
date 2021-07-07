@@ -4,6 +4,7 @@ import {useForm} from "react-hook-form";
 import axios from "axios";
 import styles from "./CSS/Register.module.css";
 import LoadingAnimation from "../components/LoadingAnimation/LoadingAnimation";
+import ButtonLarge from "../components/Buttons/ButtonLarge/ButtonLarge";
 
 function Register() {
     const history = useHistory()
@@ -144,9 +145,7 @@ function Register() {
                             })}
                         />
                     </label>
-                    <button type="submit">
-                        Register and continue to website
-                    </button>
+                    <ButtonLarge title="Register and continue to website" type="submit" />
                     {backendError && backendError.map(error => <div className={styles["error-big"]}>{error}</div>)}
                     {succes && <div className={styles.succes}>
                         {!succesText && <LoadingAnimation/>}

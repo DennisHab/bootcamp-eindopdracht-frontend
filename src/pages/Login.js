@@ -5,6 +5,7 @@ import axios from "axios";
 import styles from "./CSS/Login.module.css";
 import {AuthContext} from "../context/AuthContext";
 import LoadingAnimation from "../components/LoadingAnimation/LoadingAnimation";
+import ButtonLarge from "../components/Buttons/ButtonSmall/ButtonSmall";
 
 function Login() {
     const {login} = useContext(AuthContext);
@@ -52,11 +53,7 @@ function Login() {
                     />
                 </label>
                 {backendError && backendError.map(error => <div className={styles["error-big"]}>{error}</div>)}
-                <button
-                    type="submit"
-                >
-                    Login
-                </button>
+                <ButtonLarge title="Login" type="submit"/>
                 Dont have a account? Register <Link to={"/register"}><b> here </b></Link>
                 {succes && <div className={styles.succes}><LoadingAnimation/></div>}
             </fieldset>

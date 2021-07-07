@@ -124,7 +124,7 @@ function SingleEvent() {
                         </div>
                         }
                         {!user && <Link id={styles["register-button"]} to={"/register"}>
-                            <button>You need an account to add reviews, click here to register</button>
+                            <ButtonLarge title="You need an account to place reviews. Register here"/>
                         </Link>}
                         {user && user.authorities[0].authority === "ROLE_USERSOWNER" &&
                         <h2 className={styles["error-message"]}>You can't add reviews as venue owner.</h2>}
