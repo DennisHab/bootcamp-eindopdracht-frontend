@@ -2,7 +2,7 @@ import React, {createContext, useState, useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import LoadingAnimation from "../components/LoadingAnimation";
+import LoadingAnimation from "../components/LoadingAnimation/LoadingAnimation";
 
 export const AuthContext = createContext({});
 
@@ -69,7 +69,8 @@ function AuthContextProvider({children}){
     const data = {
         ...authState,
         login: login,
-        logout: logout
+        logout: logout,
+        fetchUserData: fetchUserData
     }
     return (
         <AuthContext.Provider value={data}>

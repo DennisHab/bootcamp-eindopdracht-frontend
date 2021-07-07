@@ -1,0 +1,86 @@
+.flip-container {
+    perspective: 1000px;
+}
+.flip-container:hover .flipper, .flip-container.hover .flipper {
+    transform: rotateY(180deg);
+}
+.flip-container, .front, .back {
+    height: 500px;
+    width: 400px;
+}
+.flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+.front, .back {
+    backface-visibility: hidden;
+    color: #8B0D32;
+    text-align: center;
+    border-radius: 36px;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.front {
+    z-index: 2;
+    transform: rotateY(0deg);
+    box-shadow: rgba(230, 230, 230, 0.25) 0px 50px 100px -20px, rgba(230, 230, 230, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    text-align: center;
+}
+.back {
+    transform: rotateY(180deg);
+    font-family: "Leelawadee UI", sans-serif;
+    padding: 10px;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(230, 230, 230, 0.40) 0px 50px 100px -20px, rgba(230, 230, 230, 0.6) 0px 30px 60px -30px;
+    /*border: 1px solid #E6E6E6;*/
+    background-color: #E6E6E6;
+    color: #8B0D32;
+    position: relative;
+}
+.back p {
+    font-size: 40px;
+}
+.back-image {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    left: 100px;
+    top: 350px;
+}
+.text-area-front {
+    color: #E6E6E6;
+    border-radius: 10px;
+    /*border: 1px solid #E6E6E6;*/
+    /*background-color: rgba(230, 230, 230, 0.7);*/
+    display: flex;
+    height: fit-content;
+    width: 80%;
+    font-size: 40px;
+    justify-content: center;
+    text-align: center;
+    position: absolute;
+    align-content: center;
+    bottom: 18px;
+    left: 40px;
+}
+.front-image {
+    position: relative;
+    height: 100%;
+    border-radius: 35px;
+}
+.text-area-front p {
+    display: flex;
+    text-shadow: 1px 1px black;
+    align-self: center;
+    margin: 10px;
+}
+
+
+
+
+
+
+

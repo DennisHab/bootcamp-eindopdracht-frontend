@@ -1,8 +1,8 @@
 
 import './App.css';
-import React, {useContext} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import TopMenu from "./components/TopMenu";
+import TopMenu from "./components/Navigation/TopMenu/TopMenu";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -12,8 +12,7 @@ import Venues from "./pages/Venues";
 import Reviews from "./pages/Reviews";
 import SingleVenue from "./pages/SingleVenue";
 import SingleEvent from "./pages/SingleEvent";
-import PrivateRoute from "./components/PrivateRoute";
-import LoadingAnimation from "./components/LoadingAnimation";
+import PrivateRoute from "./components/misc/PrivateRoute";
 
 function App() {
   return (

@@ -1,0 +1,80 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.event-list{
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+.event-list li {
+    width: 70%;
+    margin-bottom: 10px;
+}
+.event-navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: fit-content;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+
+}
+.event-navigation-buttons{
+    display: flex;
+    flex-direction: row;
+}
+.event-navigation button {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border-radius: 5px;
+    height: fit-content;
+    margin: 20px;
+    width: 33%;
+    font-size: 20px;
+}
+.pageNumbers {
+    list-style: none;
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+    justify-self: center;
+    align-items: center;
+    padding: 5px;
+    background-color: #E6E6E6;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.pageNumbers li{
+    padding:10px;
+    border: 1px solid #8B0D32;
+    height: fit-content;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.pageNumbers button{
+    width: 25%;
+    height: 100%;
+}
+.active {
+    background-color: #8B0D32 ;
+    color: #E6E6E6;
+}
+#button-prev, #button-next{
+    border: none;
+}
+#button-prev button, #button-next button {
+    width: 50px;
+    background: #E6E6E6;
+    border-radius: 2px;
+    color: #8B0D32;
+}
+

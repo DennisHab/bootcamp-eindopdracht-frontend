@@ -1,0 +1,94 @@
+:root {
+    --menu-bar-width: 40px;
+    --menu-bar-height: 5px;
+}
+.navigation-container {
+    z-index: 2;
+    width: 5%;
+    height: 10em;
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    position: relative;
+    transition: width ease-in-out 500ms, transform 400ms ease-in-out, top 400ms ease-in-out;
+}
+.navigation-container:hover {
+    width: 30%;
+    border-left: 1px solid #8B0D32;
+}
+.navigation-container:hover .bottom-navigation{
+    width: 100%;
+}
+.navigation-container:hover .arrow {
+    transform: rotate(90deg);
+}
+.bottom-navigation {
+    overflow: hidden;
+    width: 0%;
+    position: absolute;
+    height: 50%;
+    top: 20%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #E6E6E6;
+    transition: width ease-in-out 500ms;
+}
+.bottom-navigation button {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.back-button{
+    margin: 0;
+}
+#menu {
+    background-color: #8B0D32;
+    position: relative;
+    width: var(--menu-bar-width);
+    height: var(--menu-bar-height);
+    transition: 600ms ease-in-out, color 600ms ease-in-out;
+}
+#menu::before,
+#menu::after {
+    background-color: #8B0D32;
+    display: block;
+    content: "";
+    width: var(--menu-bar-width);
+    height: var(--menu-bar-height);
+    position: absolute;
+    transition: 600ms ease-in-out, top 600ms ease-in-out;
+}
+#menu::before {
+    left: 0;
+    top: -10px;
+}
+#menu::after {
+    left: 0;
+    top: 10px;
+}
+.navigation-container:hover #menu {
+    transform: rotate(360deg);
+    background-color: #E6E6E6;
+    position: relative;
+    width: var(--menu-bar-width);
+    height: var(--menu-bar-height);
+}
+
+.navigation-container:hover #menu::before,
+.navigation-container:hover #menu::after {
+    background-color: #8B0D32;
+    display: block;
+    content: "";
+    width: var(--menu-bar-width);
+    height: var(--menu-bar-height);
+    position: absolute;
+}
+.navigation-container:hover #menu::before {
+    top: 0px;
+    transform: rotate(45deg);
+}
+.navigation-container:hover #menu::after {
+    top: 0px;
+    transform: rotate(-45deg);
+}

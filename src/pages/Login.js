@@ -1,33 +1,31 @@
-import React ,{useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link, useHistory} from "react-router-dom";
-import {set, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import axios from "axios";
-import styles from "./Login.module.css";
+import styles from "./CSS/Login.module.css";
 import {AuthContext} from "../context/AuthContext";
-import LoadingAnimation from "../components/LoadingAnimation";
+import LoadingAnimation from "../components/LoadingAnimation/LoadingAnimation";
 
 function Login() {
-    const { login } = useContext(AuthContext);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const {login} = useContext(AuthContext);
+    const {register, handleSubmit, formState: {errors}} = useForm();
     const [backendError, setBackEndError] = useState([]);
-    const history = useHistory();
     const [succes, toggleSucces] = useState(false);
 
     async function onSubmit(data) {
-        try{
+        try {
             const postData = await axios.post("http://localhost:8080/authenticate", {
                 username: data.username,
                 password: data.password
             })
             toggleSucces(true);
-            setTimeout(()=> login(postData.data.jwt), 2000)
-            /*login(postData.data.jwt);*/
-        }
-        catch(e) {
+            setTimeout(() => login(postData.data.jwt), 2000)
+        } catch (e) {
             setBackEndError([e.response.data.message]);
             console.error(e);
         }
     }
+
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
@@ -53,17 +51,17 @@ function Login() {
                         {...register("password", {required: "This field is required"})}
                     />
                 </label>
-                {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
+                {backendError && backendError.map(error => <div className={styles["error-big"]}>{error}</div>)}
                 <button
                     type="submit"
                 >
                     Login
                 </button>
                 Dont have a account? Register <Link to={"/register"}><b> here </b></Link>
-                {succes && <div className={styles.succes}><LoadingAnimation/></div> }
+                {succes && <div className={styles.succes}><LoadingAnimation/></div>}
             </fieldset>
 
-    </form>
+        </form>
     )
 }
 

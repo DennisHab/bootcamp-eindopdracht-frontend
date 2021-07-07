@@ -1,9 +1,9 @@
-import React ,{useState} from 'react';
+import React, {useState} from 'react';
 import {useHistory} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
-import styles from "./Register.module.css";
-import LoadingAnimation from "../components/LoadingAnimation";
+import styles from "./CSS/Register.module.css";
+import LoadingAnimation from "../components/LoadingAnimation/LoadingAnimation";
 
 function Register() {
     const history = useHistory()
@@ -14,9 +14,9 @@ function Register() {
     const [formClassName, setFormClassName] = useState(`${styles["fieldsetafter"]}`)
     const [userOwner, setUserOwner] = useState(false);
     const [succesText, toggleSuccesText] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm();
 
-    async function onSubmit(data)    {
+    async function onSubmit(data) {
         try {
             /*Endpoints voor beide soorten accounts, bepaald door de userType state*/
             const postData = await axios.post(`http://localhost:8080/adduser/${userType}`, {
@@ -28,38 +28,43 @@ function Register() {
                 repeatedPassword: data.repeatedPassword
             })
             toggleSucces(true);
-            setTimeout(()=> {toggleSuccesText(true)}, 2000)
-            setTimeout(()=> {history.push("/login")}, 4000)
-        } catch(e) {
+            setTimeout(() => {
+                toggleSuccesText(true)
+            }, 2000)
+            setTimeout(() => {
+                history.push("/login")
+            }, 4000)
+        } catch (e) {
             setBackendError([e.response.data.message]);
             console.error(e);
         }
     }
-    return(
+
+    return (
         <div className={styles.container}>
             {/*Hier wordt de keuze gemaakt tussen een gewone account en een account voor horeca eigenaren dmv de userType state. In de backend
              wordt er onderscheid gemaakt tussen beide accountsoorten dus op basis van deze state wordt de postData endpoint bepaald. Als er gekozen
             wordt voor een eigenaarsaccount dan wordt ook de userOwner state op true gezet en zijn de relevante endpoints bereikbaar.*/}
             {!userType && !userOwner &&
             <div className={styles["register-choice"]}>
-            <button
-                type="submit"
-                onClick={()=> setUserType("usersNormal") & setFormClassName(`${styles["form-container"]}`)}
-            >
-                REGISTER AS USER
-            </button>
-            <button
-                type="submit"
-                onClick={()=> setUserType("usersOwner") & setUserOwner(true) & setFormClassName(`${styles["form-container"]}`)}
-            >
-                REGISTER AS VENUE OWNER
-            </button>
+                <button
+                    type="submit"
+                    onClick={() => setUserType("usersNormal") & setFormClassName(`${styles["form-container"]}`)}
+                >
+                    REGISTER AS USER
+                </button>
+                <button
+                    type="submit"
+                    onClick={() => setUserType("usersOwner") & setUserOwner(true) & setFormClassName(`${styles["form-container"]}`)}
+                >
+                    REGISTER AS VENUE OWNER
+                </button>
             </div>}
             <form
                 className={formClassName}
                 onSubmit={handleSubmit(onSubmit)}
             >
-            {userType &&
+                {userType &&
                 <fieldset className={className}>
                     {/*<button
                         onClick={()=>setUserType(null) & setUserOwner(false) & setFormClassName(`${styles.fieldsetafter}`)}
@@ -76,8 +81,10 @@ function Register() {
                             placeholder="Your username will be visible to other users on the platform"
                             id="username"
                             type="text"
-                            {...register("username", {required: "Username is required",
-                                minLength: {value: 4, message:"Username must be at least 4 characters long."}})}/>
+                            {...register("username", {
+                                required: "Username is required",
+                                minLength: {value: 4, message: "Username must be at least 4 characters long."}
+                            })}/>
                     </label>
                     <label htmlFor="first-name">
                         First name:
@@ -116,9 +123,11 @@ function Register() {
                             name="password"
                             id="password"
                             type="password"
-                            {...register("password", {required: "This field is required",
-                                minLength: {value: 8, message:"Password must be between 8 and 15 characters long"},
-                            maxLength: {value:15}, message:"Password must be between 8 and 15 characters long"})}
+                            {...register("password", {
+                                required: "This field is required",
+                                minLength: {value: 8, message: "Password must be between 8 and 15 characters long"},
+                                maxLength: {value: 15}, message: "Password must be between 8 and 15 characters long"
+                            })}
                         />
                     </label>
                     <label htmlFor="repeated-password">
@@ -128,23 +137,26 @@ function Register() {
                             name="repeatedPassword"
                             id="repeated-password"
                             type="password"
-                            {...register("repeatedPassword", {required: "This field is required",
-                                minLength: {value: 8, message:"Password must be between 8 and 15 characters long"},
-                                maxLength: {value:15}, message:"Password must be between 8 and 15 characters long"})}
+                            {...register("repeatedPassword", {
+                                required: "This field is required",
+                                minLength: {value: 8, message: "Password must be between 8 and 15 characters long"},
+                                maxLength: {value: 15}, message: "Password must be between 8 and 15 characters long"
+                            })}
                         />
                     </label>
                     <button type="submit">
-                    Register and continue to website
+                        Register and continue to website
                     </button>
-                    {backendError && backendError.map(error=> <div className={styles["error-big"]}>{error}</div>)}
+                    {backendError && backendError.map(error => <div className={styles["error-big"]}>{error}</div>)}
                     {succes && <div className={styles.succes}>
-                        {!succesText && <LoadingAnimation />}
+                        {!succesText && <LoadingAnimation/>}
                         {succesText && <p>You have succesfully registered. Redirecting to login page....</p>}
-                    </div> }
+                    </div>}
                 </fieldset>
-            }
+                }
             </form>
         </div>
     )
 }
+
 export default Register;

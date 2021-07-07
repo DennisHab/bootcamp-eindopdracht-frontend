@@ -1,4 +1,4 @@
-const setBackground = require('../components/EventCard').setBackground
+const setBackground = require('../components/Cards/EventCard/EventCard').setBackground
 
 
 

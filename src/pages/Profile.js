@@ -1,30 +1,29 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {AuthContext} from "../context/AuthContext";
-import {useHistory} from "react-router-dom"
-import styles from "./Profile.module.css";
-import {useForm} from "react-hook-form";
+import styles from "./CSS/Profile.module.css";
 import axios from "axios";
-import AddressForm from "../components/AddressForm";
-import VenueForm from "../components/VenueForm";
-import EventForm from "../components/EventForm";
-import PasswordChange from "../components/PasswordChange";
-import VenueCard from "../components/VenueCard";
-import EventCard from "../components/EventCard";
-import ReviewCard from "../components/ReviewCard";
-import RemoveAccountButton from "../components/RemoveAccountButton";
+import AddressForm from "../components/Forms/AddressForm/AddressForm";
+import VenueForm from "../components/Forms/VenueForm/VenueForm";
+import ButtonLarge from "../components/Buttons/ButtonLarge/ButtonLarge";
+import PasswordChange from "../components/Forms/PasswordChange/PasswordChange";
+import VenueCard from "../components/Cards/VenueCard/VenueCard";
+import EventCard from "../components/Cards/EventCard/EventCard";
+import ReviewCard from "../components/Cards/ReviewCard/ReviewCard";
+import RemoveAccount from "../helpers/RemoveAccount"
+import ButtonSmall from "../components/Buttons/ButtonSmall/ButtonSmall";
+import ButtonWithConfirmation from "../components/Buttons/ButtonWithConfirmation/ButtonWithConfirmation";
 
 function Profile() {
-    const history = useHistory();
     const {user, logout} = useContext(AuthContext);
     const [addressAdd, setAddressAdd] = useState(false);
     const [addressChange, setAddressChange] = useState(false);
     const [venueAdd, setVenueAdd] = useState(false);
+    const [addEvent, toggleAddEvent] = useState(false);
+    const [addImage, toggleAddImage] = useState(false);
+    const [deleteVenue, toggleDeleteVenue] = useState(false);
     const [backendError, setBackenderror] = useState([]);
-    const {register, handleSubmit, formState: {errors}} = useForm();
     const [currentTab, setCurrentTab] = useState("profile");
-    const [passwordChange, togglePasswordChange] = useState(false);
     const [userEvents, setUserEvents] = useState([]);
-    const [venueId, setVenueId] = useState(0);
     const [filterEvents, toggleFilterEvents] = useState(false)
     const Token = localStorage.getItem('jwt');
     const headers = {
@@ -35,24 +34,29 @@ function Profile() {
     //AddUserEvents wordt aangeroepen om alle events van de ingelogde user op te halen.
     const userVenueList = user.venueList
     const res = []
+
     async function addUserEvents() {
-        if(user.authorities[0].authority === "ROLE_USERSOWNER"){
-           for(let i=0; i<userVenueList.length; i ++){
-               if (userVenueList[i].events.length > 0){
-               const events= userVenueList[i].events.concat();
-               res.push(events)}
-           }
-        setUserEvents([].concat.apply([],res))
+        if (user.authorities[0].authority === "ROLE_USERSOWNER") {
+            for (let i = 0; i < userVenueList.length; i++) {
+                if (userVenueList[i].events.length > 0) {
+                    const events = userVenueList[i].events.concat();
+                    res.push(events)
+                }
+            }
+            setUserEvents([].concat.apply([], res))
         }
-        }
+    }
+
     //Variabelen voor het sorteren op datum.
-    const today= new Date();
-    const date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+    const today = new Date();
+    const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
 
     // Zodra een eigenaar in de tab 'My events' alleen aankomende evenementen wil zien kan hij op een knop klikken die
     // de filterEvents state op true zet en de events in het verleden filtert.
     useEffect(() => {
-        if(!filterEvents){addUserEvents()}
+            if (!filterEvents) {
+                addUserEvents()
+            }
         }
         , [filterEvents])
 
@@ -66,7 +70,7 @@ function Profile() {
                     city: data.city,
                     country: data.country
                 }, {
-                    headers : headers
+                    headers: headers
                 })
             }
             if (addressChange) {
@@ -76,7 +80,7 @@ function Profile() {
                     postalCode: data.postalCode,
                     city: data.city,
                     country: data.country
-                },{
+                }, {
                     headers: headers
                 })
             }
@@ -139,29 +143,21 @@ function Profile() {
                     </table>
                 </div>
                 <div className={styles["profile-options"]}>
-                    <RemoveAccountButton />
-                    {!addressAdd ?
-                        <button onClick={() => setAddressAdd(true)}>
-                            Add address to profile
-                        </button> :
-                        <button onClick={() => setAddressAdd(false)}>
-                            Add later
-                        </button>
-                    }
-                    {!addressChange  ?
-                        <button onClick={() => setAddressChange(true)}>
-                            Change address
-                        </button> :
-                        <button onClick={() => setAddressChange(false)}>
-                            Change later
-                        </button>
-                    }
+                    <ButtonWithConfirmation
+                        buttonText="Delete Account"
+                        onClick={() => RemoveAccount(user.username, logout)}
+                        text="Delete account?"
+                    />
+                    {!user.address &&
+                    <ButtonSmall onClick={() => setAddressAdd(true)} title={"Add address to profile"}/>}
+                    {user.address && <ButtonSmall onClick={() => setAddressChange(true)} title={"Change address"}/>}
                 </div>
                 {addressChange &&
                 <div className={styles["address-form"]}>
                     <AddressForm
                         onSubmit={onSubmit}
                         backendError={backendError}
+                        onClick={() => setAddressChange(false)}
                     />
                 </div>
                 }
@@ -170,6 +166,7 @@ function Profile() {
                     <AddressForm
                         onSubmit={onSubmit}
                         backendError={backendError}
+                        onClick={() => setAddressAdd(false)}
                     />
                 </div>
                 }
@@ -185,46 +182,70 @@ function Profile() {
                     <h1>Venues of {user.username}</h1>
                 </header>
                 <div className={styles["venue-navigation"]}>
-                    {!venueAdd ? <button onClick={() => setVenueAdd(true) }> Add venue</button>
-                        : <button onClick={() => setVenueAdd(false)}> Add later</button>
+                    {!venueAdd &&
+                    <ButtonLarge
+                        onClick={() => setVenueAdd(true)}
+                        type={"button"}
+                        title={"Add venue"}
+                    />
                     }
-
                 </div>
                 {venueAdd &&
-                <VenueForm
-                    username={user.username}
-                />
+                <div className={styles["venue-form"]}>
+                    <VenueForm
+                        username={user.username}
+                        onClick={() => setVenueAdd(false)}
+                    />
+                </div>
                 }
-                {!venueAdd && user.venueList.length > 0 && <div className={styles["venue-list"]}>
-                    {user.venueList.map((venue) => {
-                        return (<>
-                            <VenueCard
+                {user.venueList.length > 0 &&
+                <ul className={styles["venue-list"]} style={{filter: venueAdd ? "blur(5px)" : "none"}}>
+                    {user.venueList.map((venue, index) => {
+                        return (
+                            <li key={index}>
+                                <VenueCard
+                                    index={index}
                                     image={venue.image}
-                                    name={venue.venueName}
                                     city={venue.address.city}
+                                    name={venue.venueName}
                                     events={venue.events}
                                     id={venue.id}
                                     facebook={venue.facebook}
                                     instagram={venue.instagram}
                                     rating={venue.rating}
                                     website={venue.website}
+                                    addEvent={addEvent}
+                                    toggleAddEvent={toggleAddEvent}
+                                    addImage={addImage}
+                                    toggleAddImage={toggleAddImage}
+                                    deleteVenue={deleteVenue}
+                                    toggleDeleteVenue={toggleDeleteVenue}
                                 />
-                            </>
+                            </li>
                         )
                     })}
-
-                </div>}
+                </ul>
+                }
                 {!user.venueList && <p>No venues yet, click 'add venue' to add one!</p>}
             </fieldset>
             }
             {currentTab === "events" &&
             <section className={styles.events}>
+                <header className={styles["venues-header"]}>
+                    <h1>Events of {user.username}</h1>
+                </header>
                 <div className={styles["event-navigation"]}>
                     {!filterEvents ?
-                    <button onClick={()=> setUserEvents(userEvents.filter((evente)=>{
-                        return  new Date(evente.date.split('-').reverse()) > new Date(date.split('-').reverse())
-                    })) & toggleFilterEvents(!filterEvents)}> Only show upcoming events </button> :
-                    <button onClick={()=> setUserEvents(userEvents) & toggleFilterEvents(!filterEvents)}> Show all events </button>}
+                        <ButtonLarge
+                            onClick={() => setUserEvents(userEvents.filter((evente) => {
+                                return new Date(evente.date.split('-').reverse()) > new Date(date.split('-').reverse())
+                            })) & toggleFilterEvents(!filterEvents)}
+                            title="Only show upcoming events"
+                        /> :
+                        <ButtonLarge
+                            onClick={() => setUserEvents(userEvents) & toggleFilterEvents(!filterEvents)}
+                            title="Show all events"
+                        />}
                 </div>
                 {userEvents.map((userEvent) => {
                     return (
@@ -277,7 +298,7 @@ function Profile() {
                                 content={review.reviewContent}
                                 user={review.user}
                                 rating={review.rating}
-                                venueEvent={review.event ? "Event: " + review.event.name  : "Venue: " + review.venue.venueName}
+                                venueEvent={review.event ? "Event: " + review.event.name : "Venue: " + review.venue.venueName}
                             />
                         </div>)
                 }) : <h1>No reviews yet!</h1>}

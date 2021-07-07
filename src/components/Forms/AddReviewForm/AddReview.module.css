@@ -1,0 +1,75 @@
+.container {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #E6E6E6;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.container button {
+    align-self: flex-start;
+}
+.container form {
+    width: 90%;
+}
+.review-content p {
+    font-style: italic;
+}
+.review-content {
+    position: relative;
+    border: none;
+    align-items: center;
+    text-align: center;
+}
+.slider-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+.review-content-textbox {
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+    justify-self: center;
+    text-align: center;
+    border-radius: 10px;
+    height: 150px;
+}
+.slider-container label{
+    font-size: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+}
+.slider-container button{
+    margin: 4px;
+    padding: 10px;
+    font-weight: bold;
+    background: none;
+    color: #8B0D32;
+    border: none;
+}
+.slider-container p {
+    margin: 4px;
+    padding: 10px;
+}
+#button-right {
+    color: green;
+}
+#button-left {
+    color: red;
+}
+.succes {
+    position: absolute;
+    top: 0;
+    bottom: 200px;
+    left: 0;
+    right: 0;
+    color: green;
+}

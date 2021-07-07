@@ -1,0 +1,79 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+}
+.form-container{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+.form-first-part{
+    display: flex;
+    flex-direction: column;
+}
+.form-second-part{
+    display: flex;
+    flex-direction: column;
+}
+.form-container fieldset{
+    border: none;
+}
+.form-container input{
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+    border: none;
+    border-bottom: #8B0D32 4px solid;
+    background: none;
+    margin-bottom:30px;
+    text-align: center;
+}
+.form-container label{
+    font-size: 25px;
+    margin: 10px;
+}
+
+.form-container select{
+    width: 100%;
+    background-color: #E6E6E6;
+    border-radius: 10px;
+    border: none;
+}
+select:hover{
+    background-color: #E6E6E6;
+}
+.form-container option{
+    background-color: rgba(139, 13, 50, 0.7);
+}
+.form-container textarea{
+    width: 90%;
+    height: 100px;
+}
+#ticket-required{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.form-container p {
+    font-size: 25px;
+    margin: 10px;
+}
+.ticket-required label{
+    display: inline-flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+.ticket-required input{
+    display: inline;
+}
+
+
+
+
+
+

@@ -1,0 +1,117 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    color: var(--text-color);
+    padding: 20px;
+    align-items: center;
+    background: #E6E6E6;
+    border-radius: 5px;
+    border: 1px solid #E6E6E6;
+    width: 100%;
+    margin: 20px 20px 0 0;
+}
+.container:hover{
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border: 1px solid #8B0D32;
+}
+.event-image {
+    display: inline;
+    width: 250px;
+    border: 2px solid #E6E6E6;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    height: 200px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.event-card {
+    text-align: center;
+    overflow: no-content;
+    display: block;
+    width: 100%;
+}
+.event-header h1{
+    color: var(--text-color);
+    margin: 3px;
+    margin-left: 10%;
+    width: 100%;
+}
+.event-header {
+    padding: 10px;
+    border-bottom: #8B0D32 1px solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#event-rating {
+    display: flex;
+    height: 50px;
+    width: 60px;
+    color: black;
+    background-color: green;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.event-information {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.event-information p {
+    font-weight: bold;
+    font-size: large;
+}
+.event-table {
+    width: 100%;
+    margin: 2px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+.event-table td {
+    text-align: left;
+    width:30%;
+}
+.event-table tr {
+    margin: 5px;
+}
+.user-navigation {
+    display: flex;
+    justify-content: flex-end;
+}
+.location {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    font-weight: bold;
+}
+.location img {
+    margin-right: 10px;
+}
+.event-location-navigation {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+.popup-form-container {
+    backdrop-filter: blur(5px);
+    z-index: 1;
+    position: relative;
+    transition: ease-in-out 200ms;
+}
+.popup-form-image {
+    border: 1px solid #8B0D32;
+    position: absolute;
+    top: -250px;
+    left: 35%;
+    z-index: 1;
+    background-color: #E6E6E6;
+}
+

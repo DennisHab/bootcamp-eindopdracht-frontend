@@ -1,0 +1,155 @@
+.navigation {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    width: 70%;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 5px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .navigation{
+        width: 100%;
+    }
+}
+.navigation-sort-search{
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+.venue-navigation button {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border-radius: 5px;
+    height: fit-content;
+    margin: 10px;
+    font-size: 20px;
+}
+.sort-button {
+    width: 16%;
+    position: relative;
+    padding: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: auto;
+    background-color: #E6E6E6;
+    color: #8B0D32;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.arrow {
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #8B0D32;
+    transition: transform ease-in-out 500ms;
+}
+.sort-buttons,
+.sort-buttons-events,
+.sort-buttons-reviews,
+.sort-buttons-filter {
+    width: 100%;
+    overflow: hidden;
+    height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    border: none;
+    position: absolute;
+    top: 100%;
+    background-color: #E6E6E6;
+    transition: height ease-in-out 500ms;
+}
+.sort-button:hover{
+    border-top: 2px solid #8B0D32;
+    border-left: 2px solid #8B0D32;
+    border-right: 2px solid #8B0D32;
+    padding: 4px;
+}
+.sort-button:hover .arrow{
+    transform: rotate(90deg);
+}
+
+.sort-buttons button,
+.sort-buttons-events button,
+.sort-buttons-reviews button,
+.sort-buttons-filter button {
+    font-size: 0.85em;
+    background-color: #E6E6E6;
+    color: #8B0D32;
+    border: none;
+    width: 100%;
+}
+.sort-buttons button:hover,
+.sort-buttons-events button:hover,
+.sort-buttons-reviews button:hover,
+.sort-buttons-filter button:hover {
+    color: #E6E6E6;
+    background-color: #8B0D32;
+}
+.sort-button:hover  .sort-buttons {
+    height: 88px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-left: 2px solid #8B0D32;
+    border-right: 2px solid #8B0D32;
+    border-bottom: 2px solid #8B0D32;
+}
+.sort-button:hover  .sort-buttons-events {
+    height: 110px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-left: 2px solid #8B0D32;
+    border-right: 2px solid #8B0D32;
+    border-bottom: 2px solid #8B0D32;
+}
+.sort-button:hover .sort-buttons-filter {
+    height: 66px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-left: 2px solid #8B0D32;
+    border-right: 2px solid #8B0D32;
+    border-bottom: 2px solid #8B0D32;
+}
+.sort-button:hover .sort-buttons-reviews {
+    height: 22px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-left: 2px solid #8B0D32;
+    border-right: 2px solid #8B0D32;
+    border-bottom: 2px solid #8B0D32;
+}
+
+@media only screen and (max-width: 1024px)
+{
+    .sort-button:hover  .sort-buttons {
+        height: 154px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        border-left: 2px solid #8B0D32;
+        border-right: 2px solid #8B0D32;
+        border-bottom: 2px solid #8B0D32;
+    }
+    .sort-button:hover  .sort-buttons-events {
+        height: 135px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        border-left: 2px solid #8B0D32;
+        border-right: 2px solid #8B0D32;
+        border-bottom: 2px solid #8B0D32;
+    }
+    .sort-button:hover .sort-buttons-filter {
+        height: 81px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        border-left: 2px solid #8B0D32;
+        border-right: 2px solid #8B0D32;
+        border-bottom: 2px solid #8B0D32;
+    }
+}
+
+
+
+
+

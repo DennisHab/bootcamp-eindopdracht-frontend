@@ -1,12 +1,12 @@
 import React from 'react';
-import SmallThumbnail from "../components/SmallThumbnail";
+import SmallThumbnail from "../components/Thumbnail/SmallThumbnail";
 import thumbnailImage1 from "../assets/thumbnailimage1.jpg";
 import thumbnailImage2 from "../assets/thumbnailimage2.jpg";
 import thumbnailImage3 from "../assets/thumbnailimage3.jpg";
-import styles from "./Home.module.css";
+import styles from "./CSS/Home.module.css";
 
-function Home(){
-    return(
+function Home() {
+    return (
         <div className={styles["homepage-links"]}>
             <SmallThumbnail
                 image={thumbnailImage1}
@@ -29,4 +29,5 @@ function Home(){
         </div>
     )
 }
+
 export default Home;
