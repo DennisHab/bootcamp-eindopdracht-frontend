@@ -10,24 +10,13 @@ import ButtonSmall from "../components/Buttons/ButtonSmall/ButtonSmall";
 import AddFavouriteEvent from "../helpers/AddFavouriteEvent";
 import RemoveFavouriteEvent from "../helpers/RemoveFavouriteEvent";
 import ButtonLarge from "../components/Buttons/ButtonLarge/ButtonLarge";
+import isUserFavourite from "../helpers/isUserFavourite";
 
 function SingleEvent() {
     const [eventData, setEventData] = useState(null);
     const [addReview, toggleAddReview] = useState(false);
     let {id} = useParams();
     const {user} = useContext(AuthContext);
-
-    function isUserFavourite() {
-        let UserFavourite = false
-        {
-            user.favouredEvents.map((evente) => {
-                if (evente.id === eventData.id) {
-                    UserFavourite = true
-                }
-            })
-        }
-        return UserFavourite;
-    }
 
     useEffect(() => {
         async function getEvent() {
@@ -38,7 +27,6 @@ function SingleEvent() {
                 console.error(e);
             }
         }
-
         getEvent()
     }, [])
 
@@ -55,13 +43,13 @@ function SingleEvent() {
                         />}
                     </header>
                     <div className={styles["event-navigation"]}>
-                        {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && !isUserFavourite() &&
+                        {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && !isUserFavourite(user.favouredEvents, eventData.id) &&
                         <ButtonSmall
                             onClick={() => AddFavouriteEvent(id, user.username)}
                             title={"Add to favourites"}
                         />
                         }
-                        {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && isUserFavourite() &&
+                        {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && isUserFavourite(user.favouredEvents, eventData.id) &&
                         <ButtonSmall
                             onClick={() => RemoveFavouriteEvent(id, user.username)}
                             title={"Remove from favourites"}

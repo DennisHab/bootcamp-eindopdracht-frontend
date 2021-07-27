@@ -11,6 +11,8 @@ import SlideNavigationMenu from "../../Navigation/SlideNavigationMenu/SlideNavig
 import ButtonWithConfirmation from "../../Buttons/ButtonWithConfirmation/ButtonWithConfirmation";
 import RemoveEvent from "../../../helpers/RemoveEvent"
 import AddImageToEventForm from "../../Forms/AddImageForms/AddImageToEventForm";
+import isUserFavourite from "../../../helpers/isUserFavourite";
+import isUserVenue from "../../../helpers/isUserVenue";
 
 function EventCard({
                        image,
@@ -31,28 +33,6 @@ function EventCard({
     const [addOnCard, toggleAddOnCard] = useState(false);
     const history = useHistory();
 
-    function isUserVenue() {
-        let userVenue = false
-        user.venueList.map((UserVenue) => {
-                if (UserVenue.id === venueId) {
-                    userVenue = true
-                }
-            }
-        )
-        return userVenue
-    }
-
-    function isUserFavourite() {
-        let userFavourite = false
-        user.favouredEvents.map((evente) => {
-                if (evente.id === id) {
-                    userFavourite = true
-                }
-            }
-        )
-        return userFavourite
-    }
-
     function handleClick(e) {
         e.stopPropagation()
         e.preventDefault()
@@ -66,12 +46,12 @@ function EventCard({
                 <div onClick={(e) => handleClick(e)} className={styles["event-card"]}>
                     <header className={styles["event-header"]}>
                         <div onClick={e => e.stopPropagation()} className={styles["user-navigation"]}>
-                            {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && !isUserFavourite() &&
+                            {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && !isUserFavourite(user.favouredEvents, id) &&
                             <ButtonSmall
                                 onClick={() => AddFavouriteEvent(id, user.username)}
                                 title="Add to favourites"
                             />}
-                            {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && isUserFavourite() &&
+                            {user && user.authorities[0].authority === "ROLE_USERSNORMAL" && isUserFavourite(user.favouredEvents, id) &&
                             <ButtonSmall
                                 onClick={() => RemoveFavouriteEvent(id, user.username)}
                                 title="Remove from favourites"
@@ -105,7 +85,7 @@ function EventCard({
                     </section>
 
                 </div>
-                {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue(id) &&
+                {user && user.authorities[0].authority === "ROLE_USERSOWNER" && isUserVenue(user.venueList, id) &&
                 <SlideNavigationMenu
                     children={<>
                         <ButtonWithConfirmation
